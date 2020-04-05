@@ -20,7 +20,7 @@ Async 是一个直截了当、强大的[异步 JavaScript](http://caolan.github.
 
 中文文档正在翻译中，英文文档可访问 <https://caolan.github.io/async/>
 
-*Async v1.5.x 文档（未翻译）， [点击此处](https://github.com/caolan/async/blob/v1.5.2/README.md)*
+*Async v1.5.x 英文文档， [点击此处](https://github.com/caolan/async/blob/v1.5.2/README.md)*
 
 
 ```javascript
