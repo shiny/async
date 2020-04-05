@@ -12,17 +12,19 @@
 |-|-|-|
 |[![Linux Build Status](https://dev.azure.com/caolanmcmahon/async/_apis/build/status/caolan.async?branchName=master&jobName=Linux&configuration=Linux%20node_10_x)](https://dev.azure.com/caolanmcmahon/async/_build/latest?definitionId=1&branchName=master) | [![Windows Build Status](https://dev.azure.com/caolanmcmahon/async/_apis/build/status/caolan.async?branchName=master&jobName=Windows&configuration=Windows%20node_10_x)](https://dev.azure.com/caolanmcmahon/async/_build/latest?definitionId=1&branchName=master) | [![MacOS Build Status](https://dev.azure.com/caolanmcmahon/async/_apis/build/status/caolan.async?branchName=master&jobName=OSX&configuration=OSX%20node_10_x)](https://dev.azure.com/caolanmcmahon/async/_build/latest?definitionId=1&branchName=master)| -->
 
-Async is a utility module which provides straight-forward, powerful functions for working with [asynchronous JavaScript](http://caolan.github.io/async/v3/global.html). Although originally designed for use with [Node.js](https://nodejs.org/) and installable via `npm i async`, it can also be used directly in the browser.  A ESM/MJS version is included in the main `async` package that should automatically be used with compatible bundlers such as Webpack and Rollup.
+Async 是一个直截了当、强大的[异步 JavaScript](http://caolan.github.io/async/v3/global.html) 实用工具模块。
+尽管最初是设计用于 [Node.js](https://nodejs.org/)，可通过 `npm i async` 安装，但它也可以直接用于浏览器。
+`async` 包里也包含了 ESM/MJS 版本，可以自动用于类似 Webpack、Rollup 的兼容打包工具。
 
-A pure ESM version of Async is available as [`async-es`](https://www.npmjs.com/package/async-es).
+此外还有一个纯 ESM 版本的 Async：[`async-es`](https://www.npmjs.com/package/async-es)。
 
-For Documentation, visit <https://caolan.github.io/async/>
+中文文档正在翻译中，英文文档可访问 <https://caolan.github.io/async/>
 
-*For Async v1.5.x documentation, go [HERE](https://github.com/caolan/async/blob/v1.5.2/README.md)*
+* Async v1.5.x 文档（未翻译）， [点击此处](https://github.com/caolan/async/blob/v1.5.2/README.md)*
 
 
 ```javascript
-// for use with Node-style callbacks...
+// 使用 Node 回调风格……
 var async = require("async");
 
 var obj = {dev: "/dev.json", test: "/test.json", prod: "/prod.json"};
@@ -40,7 +42,7 @@ async.forEachOf(obj, (value, key, callback) => {
     });
 }, err => {
     if (err) console.error(err.message);
-    // configs is now a map of JSON data
+    // configs 现在是 JSON 数据映射
     doSomethingWith(configs);
 });
 ```
@@ -48,13 +50,13 @@ async.forEachOf(obj, (value, key, callback) => {
 ```javascript
 var async = require("async");
 
-// ...or ES2017 async functions
+// ...或者 ES2017 async functions
 async.mapLimit(urls, 5, async function(url) {
     const response = await fetch(url)
     return response.body
 }, (err, results) => {
     if (err) throw err
-    // results is now an array of the response bodies
+    // 现在 results 是返回的 response.body 数组
     console.log(results)
 })
 ```
