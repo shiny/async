@@ -48,12 +48,12 @@ var self = this;
 <?js } ?>
 
 <?js if (data.params && params.length) { ?>
-    <h5>Parameters:</h5>
+    <h5>参数：</h5>
     <?js= this.partial('params.tmpl', params) ?>
 <?js } ?>
 
 <?js if (data.returns && returns.length) { ?>
-<h5>Returns:</h5>
+<h5>返回：</h5>
 <?js if (returns.length > 1) { ?><ul><?js
     returns.forEach(function(r) { ?>
         <li><?js= self.partial('returns.tmpl', r) ?></li>
@@ -65,7 +65,7 @@ var self = this;
 } } ?>
 
 <?js if (data.examples && examples.length) { ?>
-    <h5>Example<?js= examples.length > 1? 's':'' ?></h5>
+    <h5>示例</h5>
     <?js= this.partial('examples.tmpl', examples) ?>
 <?js } ?>
 
