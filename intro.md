@@ -5,7 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/caolan/async/badge.svg?branch=master)](https://coveralls.io/r/caolan/async?branch=master)
 [![Join the chat at https://gitter.im/caolan/async](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/caolan/async?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-*Async v1.5.x 文档， [点击此处（未翻译）](https://github.com/caolan/async/blob/v1.5.2/README.md)*
+*Async v1.5.x 英文文档， [点击此处](https://github.com/caolan/async/blob/v1.5.2/README.md)*
 
 Async 是一个直截了当、强大的[异步 JavaScript](http://caolan.github.io/async/v3/global.html) 实用工具模块。
 尽管最初是设计用于 [Node.js](https://nodejs.org/)，可通过 `npm i async` 安装，但它也可以直接用于浏览器。
@@ -15,13 +15,14 @@ Async 也可以这样安装：
 - [yarn](https://yarnpkg.com/en/): `yarn add async`
 
 
-Async provides around 70 functions that include the usual 'functional'
-suspects (`map`, `reduce`, `filter`, `each`…) as well as some common patterns
-for asynchronous control flow (`parallel`, `series`, `waterfall`…). 
+Async 提供了约 70 种函数，包括常见的泛函（`map`、`reduce`、`filter`、`each`…）， 
+同时也提供了几种常见的异步流控制模式 （`parallel`、`series`、`waterfall`等）。
 
-All these
-functions assume you follow the Node.js convention of providing a single
-callback as the last argument of your asynchronous function -- a callback which expects an Error as its first argument -- and calling the callback once.
+所有以上函数都假设你会遵循 Node.js 回调函数默认约定：
+提供一个回调函数为异步函数的最后一个参数；
+回调函数第一个参数必须是错误信息（Error）；
+每个回调函数只调用一次。
+
 
 同时也可以传入 `async` 函数，而不是回调函数。关于此信息，更多可参见 [AsyncFunction](global.html#AsyncFunction)
 
@@ -30,7 +31,7 @@ callback as the last argument of your asynchronous function -- a callback which 
 
 ```js
 async.map(['file1','file2','file3'], fs.stat, function(err, results) {
-    // results is now an array of stats for each file
+    // 现在 results 是包含每个文件状态的数组
 });
 
 async.filter(['file1','file2','file3'], function(filePath, callback) {
@@ -38,7 +39,7 @@ async.filter(['file1','file2','file3'], function(filePath, callback) {
     callback(null, !err)
   });
 }, function(err, results) {
-    // results now equals an array of the existing files
+    // 现在 results 等于包含存在文件的数组
 });
 
 async.parallel([
@@ -54,22 +55,23 @@ async.series([
 ]);
 ```
 
-There are many more functions available so take a look at the docs below for a
-full list. This module aims to be comprehensive, so if you feel anything is
-missing please create a GitHub issue for it.
+此外还有很多可用的函数，完整列表请看文档。此模块致力于适用广泛场景，如果你觉得有缺失，请创建 Github issue。
 
-## Common Pitfalls [(StackOverflow)](http://stackoverflow.com/questions/tagged/async.js)
+## 常见的坑 [(Stack溢出)](http://stackoverflow.com/questions/tagged/async.js)
 
-### Synchronous iteration functions
+### 同步的迭代函数
 
-If you get an error like `RangeError: Maximum call stack size exceeded.` or other stack overflow issues when using async, you are likely using a synchronous iteratee.  By *synchronous* we mean a function that calls its callback on the same tick in the javascript event loop, without doing any I/O or using any timers.  Calling many callbacks iteratively will quickly overflow the stack. If you run into this issue, just defer your callback with `async.setImmediate` to start a new call stack on the next tick of the event loop.
+使用 async 时如果遇到类似  `RangeError: Maximum call stack size exceeded.` 的错误，或其他 stack 溢出错误，很可能是因为你使用了同步的迭代函数。
+*同步* 的含义是：函数在同一次 javascript 事件循环里（same tick）调用回调函数，且没有 I/O 操作、定时器的使用。
+反复调用大量这类回调函数，将快速导致 stack 溢出。
 
-This can also arise by accident if you callback early in certain cases:
+假设你遇到此问题，只需使用 `async.setImmediate` 延后回调函数，在下一次事件循环里开始新的调用栈。
+如果在某些例子中过早回调，也会遇到这些意外：
 
 ```js
 async.eachSeries(hugeArray, function iteratee(item, callback) {
     if (inCache(item)) {
-        callback(null, cache[item]); // if many items are cached, you'll overflow
+        callback(null, cache[item]); // 如果缓存了太多 item，将遇到溢出（overflow）
     } else {
         doSomeIO(item, callback);
     }
@@ -78,7 +80,7 @@ async.eachSeries(hugeArray, function iteratee(item, callback) {
 });
 ```
 
-Just change it to:
+可修改为：
 
 ```js
 async.eachSeries(hugeArray, function iteratee(item, callback) {
@@ -93,14 +95,14 @@ async.eachSeries(hugeArray, function iteratee(item, callback) {
 });
 ```
 
-Async does not guard against synchronous iteratees for performance reasons.  If you are still running into stack overflows, you can defer as suggested above, or wrap functions with [`async.ensureAsync`](#ensureAsync)  Functions that are asynchronous by their nature do not have this problem and don't need the extra callback deferral.
+由于性能原因的考虑，Async 不会去检测阻止同步的迭代器。 
+如果还跑出 stack 溢出，可以按推荐的方式延后，或用 [`async.ensureAsync`](#ensureAsync) 包含同步函数，使它不存在这样的问题，并且不需要额外延后 callback。
 
-If JavaScript's event loop is still a bit nebulous, check out [this article](http://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/) or [this talk](http://2014.jsconf.eu/speakers/philip-roberts-what-the-heck-is-the-event-loop-anyway.html) for more detailed information about how it works.
+如果对 JavaScript 的事件循环概念比较模糊，阅读[此文章](http://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/)或[此讨论](http://2014.jsconf.eu/speakers/philip-roberts-what-the-heck-is-the-event-loop-anyway.html)查看运作原理。
 
+### 多个回调函数（callback）
 
-### Multiple callbacks
-
-Make sure to always `return` when calling a callback early, otherwise you will cause multiple callbacks and unpredictable behavior in many cases.
+如果提前调用回调函数，请确保及时 `return`，否则可能会多次调用 callback，后果无法预料。
 
 ```js
 async.waterfall([
@@ -108,10 +110,10 @@ async.waterfall([
         getSomething(options, function (err, result) {
             if (err) {
                 callback(new Error("failed getting something:" + err.message));
-                // we should return here
+                // 应该在这里 return
             }
-            // since we did not return, this callback still will be called and
-            // `processData` will be called twice
+            // 由于没有 return，还是调用了下面的 callback
+            // `processData` 将会调用两次
             callback(null, result);
         });
     },
@@ -119,36 +121,37 @@ async.waterfall([
 ], done)
 ```
 
-It is always good practice to `return callback(err, result)`  whenever a callback call is not the last statement of a function.
+如果调用 callback不是函数的最后一个语句，最佳实践是 `return callback(err, result)`。
 
-### Using ES2017 `async` functions
+### 使用 ES2017 `async` 函数
 
-Async accepts `async` functions wherever we accept a Node-style callback function.  However, we do not pass them a callback, and instead use the return value and handle any promise rejections or errors thrown.
+只要 Async 库里能接受 Node 风格 callback 的函数，也可以接受 `async` 函数。
+只不过，不把它们作为回调传入，而是以值返回，也可以处理 Promise.reject 或抛出错误。
 
 ```js
-async.mapLimit(files, 10, async file => { // <- no callback!
+async.mapLimit(files, 10, async file => { // <- 没有 callback！
     const text = await util.promisify(fs.readFile)(dir + file, 'utf8')
-    const body = JSON.parse(text) // <- a parse error here will be caught automatically
+    const body = JSON.parse(text) // <- 自动产生 parse 错误
     if (!(await checkValidity(body))) {
-        throw new Error(`${file} has invalid contents`) // <- this error will also be caught
+        throw new Error(`${file} has invalid contents`) // <- 此错误会被捕捉
     }
-    return body // <- return a value!
+    return body // <- 返回 value!
 }, (err, contents) => {
     if (err) throw err
     console.log(contents)
 })
 ```
 
-We can only detect native `async` functions, not transpiled versions (e.g. with Babel).  Otherwise, you can wrap `async` functions in `async.asyncify()`.
+我们仅支持原生（native）`async` 函数，不支持编译后的版本（例如 Babel 编译）。不然的话，只能使用 `async.asyncify()` 包下 `async` 函数。
 
-### Binding a context to an iteratee
+### 为迭代器绑定上下文（context）
 
-This section is really about `bind`, not about Async. If you are wondering how to
-make Async execute your iteratees in a given context, or are confused as to why
-a method of another library isn't working as an iteratee, study this example:
+本章节不讨论 Async，而真的是绑定（`bind`）。
+若要 Async 以指定的上下文（context）执行迭代，
+或者因为其他方法、其他库不能作为迭代运行而感到疑惑，可以学习这个例子：
 
 ```js
-// Here is a simple object with an (unnecessarily roundabout) squaring method
+// 这是个带有多余又不够直接的 square 方法的简单 Object
 var AsyncSquaringLibrary = {
     squareExponent: 2,
     square: function(number, callback){
@@ -160,24 +163,22 @@ var AsyncSquaringLibrary = {
 };
 
 async.map([1, 2, 3], AsyncSquaringLibrary.square, function(err, result) {
-    // result is [NaN, NaN, NaN]
-    // This fails because the `this.squareExponent` expression in the square
-    // function is not evaluated in the context of AsyncSquaringLibrary, and is
-    // therefore undefined.
+    // result 是 [NaN, NaN, NaN]
+    // 失败的原因是：在 square 方法里，`this.squareExponent` 表达式
+    // 关联的上下文（Context）不是 AsyncSquaringLibrary，而是 undefined
 });
 
 async.map([1, 2, 3], AsyncSquaringLibrary.square.bind(AsyncSquaringLibrary), function(err, result) {
-    // result is [1, 4, 9]
-    // With the help of bind we can attach a context to the iteratee before
-    // passing it to Async. Now the square function will be executed in its
-    // 'home' AsyncSquaringLibrary context and the value of `this.squareExponent`
-    // will be as expected.
+    // result 是 [1, 4, 9]
+    // 由于 bind 的作用，把迭代器传给 Async 前附加了 Context。
+    // 现在 square 函数会以它自身的 AsyncSquaringLibrary 上下文执行
+    // 因此会得到正确的 `this.squareExponent`
 });
 ```
 
-### Subtle Memory Leaks
+### 难以察觉的内存泄漏
 
-There are cases where you might want to exit early from async flow, when calling an Async method inside another async function:
+有时在另一个异步函数里调用 Async 方法时要提前退出 async 流：
 
 ```javascript
 function myFunction (args, outerCallback) {
@@ -195,56 +196,59 @@ function myFunction (args, outerCallback) {
 }
 ```
 
-Something happened in a waterfall where you want to skip the rest of the execution, so you call an outer callack.  However, Async will still wait for that inner `next` callback to be called, leaving some closure scope allocated.
+瀑布流（waterfall）里发生什么事，需要跳出瀑布流，跳过剩余的执行时，调用了一个外部（outer）callback。
+但是，还是会等待内部 `next` callback 调用，留下分配的闭包作用域。
 
-As of version 3.0, you can call any Async callback with `false` as the `error` argument, and the rest of the execution of the Async method will be stopped or ignored.
+从版本 3.0 开始，可以传入 `false` 到 `error` 参数，阻止 Async 调用其他 callback。
 
 ```javascript
         function (arg, next) {
             if (someImportantCondition()) {
                 outerCallback(null)
-                return next(false) // ← signal that you called an outer callback
+                return next(false) // ← 标示调用了外层 callback
             }
         },
 ```
 
-### Mutating collections while processing them
+### 处理集合时的同时修改集合
 
-If you pass an array to a collection method (such as `each`, `mapLimit`, or `filterSeries`), and then attempt to `push`, `pop`, or `splice` additional items on to the array, this could lead to unexpected or undefined behavior.  Async will iterate until the original `length` of the array is met, and the indexes of items `pop()`ed or `splice()`d could already have been processed. Therefore, it is not recommended to modify the array after Async has begun iterating over it.  If you do need to `push`, `pop`, or `splice`, use a `queue` instead.
+传入 array 到集合方法（例如 `each`、`mapLimit`、`filterSeries`），并且尝试 `push`、`pop` 或 `splice` 额外项目到 array 时，可能会导致意外。
+Async 会迭代直至遇到 array 的原始 `length`，`pop()` 或 `splice()` 的项目可能已处理。
+因此不推荐修改 Async 已经迭代过的 array。
+若需要 `push`、`pop`、`splice`，使用 `queue` 替代。
 
 
-## Download
-
-The source is available for download from
-[GitHub](https://raw.githubusercontent.com/caolan/async/master/dist/async.min.js).
-Alternatively, you can install using npm:
+## 下载
+源码可以从
+[GitHub](https://raw.githubusercontent.com/caolan/async/master/dist/async.min.js) 下载。
+除此之外，也可以通过 npm 安装：
 
 ```bash
 $ npm i async
 ```
 
-You can then `require()` async as normal:
+可以和平时一样 `require()` async:
 
 ```js
 var async = require("async");
 ```
 
-Or require individual methods:
+也可以 require 一个单独的方法：
 
 ```js
 var waterfall = require("async/waterfall");
 var map = require("async/map");
 ```
 
-__Development:__ [async.js](https://raw.githubusercontent.com/caolan/async/master/dist/async.js) - 29.6kb Uncompressed
+__开发用：__ [async.js](https://raw.githubusercontent.com/caolan/async/master/dist/async.js) - 29.6kb 未压缩
 
-### In the Browser
+### 在浏览器中使用
 
-Async should work in any ES2015 environment (Node 6+ and all modern browsers).
+Async 可以在任何 ES2015 环境中运行（Node 6+ 和所有现代浏览器）。
 
-If you want to use Async in an older environment, (e.g. Node 4, IE11) you will have to transpile.
+想要在旧环境中使用 Async，(比如 Node 4、IE11) 必须先转码。
 
-Usage:
+用法：
 
 ```html
 <script type="text/javascript" src="async.js"></script>
@@ -257,14 +261,13 @@ Usage:
 </script>
 ```
 
-The portable versions of Async, including `async.js` and `async.min.js`, are
-included in the `/dist` folder. Async can also be found on the [jsDelivr CDN](http://www.jsdelivr.com/projects/async).
+在 `/dist` 中包括 `async.js` 和 `async.min.js` 为无需安装的 Async 版本。
+也能在 [jsDelivr CDN](http://www.jsdelivr.com/projects/async) 中找到 Async。
 
-### ES Modules
+### ES 模块
 
-Async includes a `.mjs` version that should automatically be used by compatible bundlers such as Webpack or Rollup, anything that uses the `module` field of the `package.json`.
-
-We also provide Async as a collection of purely ES2015 modules, in an alternative `async-es` package on npm.
+Async 包含了 `.mjs` 版本，可自动用于兼容的打包工具，类似 Webpack、Rollup，用于 `package.json` 中的 `module` 字段。
+我们也在 `async-es` npm 包中提供了纯 ES2015 模块的 Async。
 
 ```bash
 $ npm install async-es
@@ -277,13 +280,13 @@ import async from 'async-es';
 
 ### Typescript
 
-There are third-party type definitions for Async.
+Async 也有第三方的类型定义。
 
 ```
 npm i -D @types/async
 ```
 
-It is recommended to target ES2017 or higher in your `tsconfig.json`, so `async` functions are preserved:
+建议 `tsconfig.json` 里 target 为 ES2017 及更高版本，这样 `async` 函数就能被保留，无需转码：
 
 ```json
 {
@@ -293,9 +296,16 @@ It is recommended to target ES2017 or higher in your `tsconfig.json`, so `async`
 }
 ```
 
-## Other Libraries
+## 其他库
 
-* [`limiter`](https://www.npmjs.com/package/limiter) a package for rate-limiting based on requests per sec/hour.
-* [`neo-async`](https://www.npmjs.com/package/neo-async) an altername implementation of Async, focusing on speed.
-* [`co-async`](https://www.npmjs.com/package/co-async) a library inspired by Async for use with [`co`](https://www.npmjs.com/package/co) and generator functions.
-*  [`promise-async`](https://www.npmjs.com/package/promise-async) a version of Async where all the methods are Promisified.
+* [`limiter`](https://www.npmjs.com/package/limiter) 频率限制包，基于每秒/小时的请求数。
+* [`neo-async`](https://www.npmjs.com/package/neo-async) Async 替代品，专注于速度。
+* [`co-async`](https://www.npmjs.com/package/co-async) 受 Async 启发的库，配合 [`co`](https://www.npmjs.com/package/co) 和 generator 函数使用。
+*  [`promise-async`](https://www.npmjs.com/package/promise-async) 所有函数都 Promise 化的 Async 版本。
+
+## 关于翻译
+本文档基于 caolan/async master 分支进行翻译，起因为此库在克勤团队中大量用于后端队列的处理。 广告时间：招聘前端开发工程师，想要加入我们请邮件联系。
+
+中文翻译文档 Github 地址 [https://github.com/shiny/async ](https://github.com/shiny/async ) 欢迎贡献 issue/pull request。
+
+* 戴劼 <daijie@php.net>
