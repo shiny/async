@@ -5,27 +5,28 @@
 [![Coverage Status](https://coveralls.io/repos/caolan/async/badge.svg?branch=master)](https://coveralls.io/r/caolan/async?branch=master)
 [![Join the chat at https://gitter.im/caolan/async](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/caolan/async?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-*For Async v1.5.x documentation, go [HERE](https://github.com/caolan/async/blob/v1.5.2/README.md)*
+*Async v1.5.x 文档， [点击此处（未翻译）](https://github.com/caolan/async/blob/v1.5.2/README.md)*
 
-Async is a utility module which provides straight-forward, powerful functions
-for working with asynchronous JavaScript. Although originally designed for
-use with [Node.js](https://nodejs.org/) and installable via `npm i async`,
-it can also be used directly in the browser.
+Async 是一个直截了当、强大的[异步 JavaScript](http://caolan.github.io/async/v3/global.html) 实用工具模块。
+尽管最初是设计用于 [Node.js](https://nodejs.org/)，可通过 `npm i async` 安装，但它也可以直接用于浏览器。
 
-Async is also installable via:
+Async 也可以这样安装：
 
 - [yarn](https://yarnpkg.com/en/): `yarn add async`
 
+
 Async provides around 70 functions that include the usual 'functional'
 suspects (`map`, `reduce`, `filter`, `each`…) as well as some common patterns
-for asynchronous control flow (`parallel`, `series`, `waterfall`…). All these
+for asynchronous control flow (`parallel`, `series`, `waterfall`…). 
+
+All these
 functions assume you follow the Node.js convention of providing a single
 callback as the last argument of your asynchronous function -- a callback which expects an Error as its first argument -- and calling the callback once.
 
-You can also pass `async` functions to Async methods, instead of callback-accepting functions.  For more information, see [AsyncFunction](global.html#AsyncFunction)
+同时也可以传入 `async` 函数，而不是回调函数。关于此信息，更多可参见 [AsyncFunction](global.html#AsyncFunction)
 
 
-## Quick Examples
+## 快速示例
 
 ```js
 async.map(['file1','file2','file3'], fs.stat, function(err, results) {
@@ -44,7 +45,7 @@ async.parallel([
     function(callback) { ... },
     function(callback) { ... }
 ], function(err, results) {
-    // optional callback
+    // 可选的 callback
 });
 
 async.series([
