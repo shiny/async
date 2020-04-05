@@ -18,7 +18,7 @@ Async 是一个直截了当、强大的[异步 JavaScript](http://caolan.github.
 
 此外还有一个纯 ESM 版本的 Async：[`async-es`](https://www.npmjs.com/package/async-es)。
 
-中文文档正在翻译中，英文文档可访问 <https://caolan.github.io/async/>
+[中文文档正在翻译中](http://shiny.github.io/async/)，英文文档可访问 <https://caolan.github.io/async/>
 
 *Async v1.5.x 英文文档， [点击此处](https://github.com/caolan/async/blob/v1.5.2/README.md)*
 
