@@ -68,8 +68,12 @@ function combineFakeModules(files, callback) {
 function applyPreCheerioFixes(data) {
 
 
-    var rIncorrectCFText = />ControlFlow</g;
-    var fixedCFText = '>Control Flow<';
+    var rIncorrectControlFlowCFText = />ControlFlow</g;
+    var fixedControlFlowCFText = '>流程控制（Control Flow）<';
+    var rIncorrectCollectionswCFText = />Collections</g;
+    var fixedCollectionsCFText = '>集合（Collections）<';
+    var rIncorrectUtilswCFText = />Utils</g;
+    var fixedUtilsCFText = '>实用工具（Utils）<';
 
     var rIncorrectModuleText = />module:(\w+)\.(\w+)</g;
 
@@ -77,7 +81,9 @@ function applyPreCheerioFixes(data) {
     return data
         // for JSDoc to work, the module needs to be labelled 'ControlFlow', while
         // on the page it should appear as 'Control Flow'
-        .replace(rIncorrectCFText, fixedCFText)
+        .replace(rIncorrectControlFlowCFText, fixedControlFlowCFText)
+        .replace(rIncorrectCollectionswCFText, fixedCollectionsCFText)
+        .replace(rIncorrectUtilswCFText, fixedUtilsCFText)
         // for return types, JSDoc doesn't allow replacing the link text, so it
         // needs to be done here
         .replace(rIncorrectModuleText, (match, moduleName, methodName) => {
