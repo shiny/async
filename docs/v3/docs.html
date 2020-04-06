@@ -327,7 +327,7 @@
 
     
 
-    <h4 class="name" id="concat"><span class="type-signature">(static) </span>concat<span class="signature">(coll, iteratee, callback<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="concat"><span class="type-signature">(static) </span>concat<span class="signature">(coll, iteratee, callback<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &#x2192; {Promise}</span></h4>
 
     
 
@@ -336,10 +336,10 @@
 <div class="description">
     <pre class="prettyprint source"><code>import concat from &apos;async/concat&apos;;
 </code></pre>
-<p>Applies <code>iteratee</code> to each item in <code>coll</code>, concatenating the results. Returns
-the concatenated list. The <code>iteratee</code>s are called in parallel, and the
-results are concatenated as they return. The results array will be returned in
-the original order of <code>coll</code> passed to the <code>iteratee</code> function.</p>
+<p>&#x4E3A; <code>coll</code> &#x4E2D;&#x7684;&#x6BCF;&#x4E00;&#x9879;&#x5E94;&#x7528; <code>iteratee</code>&#xFF0C;&#x5E76;&#x4E14;&#x5408;&#x5E76;&#x7ED3;&#x679C;&#x3002;
+&#x8FD4;&#x56DE;&#x5408;&#x5E76;&#x540E;&#x7684;&#x5217;&#x8868;&#x3002;
+&#x4EE5;&#x5E76;&#x53D1;&#x8C03;&#x7528; <code>iteratee</code>&#xFF0C;&#x5E76;&#x4E14;&#x5408;&#x5E76;&#x5B83;&#x4EEC;&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x3002;
+&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x6570;&#x7EC4;&#x987A;&#x5E8F;&#x662F;&#x4F20;&#x7ED9; <code>iteratee</code> &#x7684; <code>coll</code> &#x539F;&#x59CB;&#x987A;&#x5E8F;&#x3002;</p>
 </div>
 
 
@@ -406,7 +406,7 @@ the original order of <code>coll</code> passed to the <code>iteratee</code> func
 
             
 
-            <td class="description last"><p>A collection to iterate over.</p></td>
+            <td class="description last"><p>&#x9700;&#x8981;&#x904D;&#x5386;&#x7684;&#x96C6;&#x5408;</p></td>
         </tr>
 
     
@@ -429,8 +429,8 @@ the original order of <code>coll</code> passed to the <code>iteratee</code> func
 
             
 
-            <td class="description last"><p>A function to apply to each item in <code>coll</code>,
-which should use an array as its result. Invoked with (item, callback).</p></td>
+            <td class="description last"><p>&#x51FD;&#x6570;&#xFF0C;&#x5E94;&#x7528;&#x5230; <code>coll</code> &#x91CC;&#x7684;&#x6BCF;&#x4E00;&#x9879;&#xFF0C;
+&#x4EA7;&#x751F;&#x7684;&#x7ED3;&#x679C;&#x5C06;&#x4F1A;&#x653E;&#x5165;&#x6570;&#x7EC4;&#x3002; &#x4EE5; (item, callback) &#x8C03;&#x7528;&#x3002;</p></td>
         </tr>
 
     
@@ -455,10 +455,9 @@ which should use an array as its result. Invoked with (item, callback).</p></td>
 
             
 
-            <td class="description last"><p>A callback which is called after all the
-<code>iteratee</code> functions have finished, or an error occurs. Results is an array
-containing the concatenated results of the <code>iteratee</code> function. Invoked with
-(err, results).</p></td>
+            <td class="description last"><p>&#x5728;&#x6240;&#x6709; <code>iteratee</code> &#x51FD;&#x6570;&#x90FD;&#x7ED3;&#x675F;&#x540E;&#x88AB;&#x8C03;&#x7528;&#xFF0C;&#x6216;&#x8005;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;&#x9519;&#x8BEF;&#x3002;
+&#x7ED3;&#x679C;&#x662F; <code>iteratee</code> &#x51FD;&#x6570;&#x4EA7;&#x751F;&#x7684;&#x5408;&#x5E76;&#x6570;&#x7EC4;&#x3002;&#x8C03;&#x7528;&#xFF1A;
+(err, results)&#x3002;</p></td>
         </tr>
 
     
@@ -472,10 +471,22 @@ containing the concatenated results of the <code>iteratee</code> function. Invok
 
         
 <div class="param-desc">
-    <p>A Promise, if no callback is passed</p>
+    <p>&#x5FFD;&#x7565; callback &#x65F6;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; promise</p>
 </div>
 
 
+
+<dl class="param-type">
+    <dt>
+        &#x7C7B;&#x578B;
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
 
     
 
@@ -483,7 +494,7 @@ containing the concatenated results of the <code>iteratee</code> function. Invok
     <h5>&#x793A;&#x4F8B;</h5>
     
     <pre class="prettyprint"><code>async.concat([&apos;dir1&apos;,&apos;dir2&apos;,&apos;dir3&apos;], fs.readdir, function(err, files) {
-    // files is now a list of filenames that exist in the 3 directories
+    // &#x73B0;&#x5728; files &#x662F;&#x5728; 3 &#x4E2A;&#x76EE;&#x5F55;&#x4E2D;&#x5DF2;&#x5B58;&#x5728;&#x7684;&#x6587;&#x4EF6;&#x540D;
 });</code></pre>
 
 
@@ -547,7 +558,7 @@ containing the concatenated results of the <code>iteratee</code> function. Invok
 
     
 
-    <h4 class="name" id="concatLimit"><span class="type-signature">(static) </span>concatLimit<span class="signature">(coll, limit, iteratee, callback<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="concatLimit"><span class="type-signature">(static) </span>concatLimit<span class="signature">(coll, limit, iteratee, callback<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &#x2192; {Promise}</span></h4>
 
     
 
@@ -556,7 +567,7 @@ containing the concatenated results of the <code>iteratee</code> function. Invok
 <div class="description">
     <pre class="prettyprint source"><code>import concatLimit from &apos;async/concatLimit&apos;;
 </code></pre>
-<p>The same as <a href="#concat"><code>concat</code></a> but runs a maximum of <code>limit</code> async operations at a time.</p>
+<p>&#x7C7B;&#x4F3C; <a href="#concat"><code>concat</code></a>&#xFF0C;&#x4F46;&#x9650;&#x5236;&#x4E86;&#x540C;&#x65F6;&#x6700;&#x591A;&#x4E3A; <code>limit</code> &#x7684;&#x5F02;&#x6B65;&#x64CD;&#x4F5C;&#x6570;&#x91CF;&#x3002;</p>
 </div>
 
 
@@ -623,7 +634,7 @@ containing the concatenated results of the <code>iteratee</code> function. Invok
 
             
 
-            <td class="description last"><p>A collection to iterate over.</p></td>
+            <td class="description last"><p>&#x9700;&#x8981;&#x904D;&#x5386;&#x7684;&#x96C6;&#x5408;</p></td>
         </tr>
 
     
@@ -646,7 +657,7 @@ containing the concatenated results of the <code>iteratee</code> function. Invok
 
             
 
-            <td class="description last"><p>The maximum number of async operations at a time.</p></td>
+            <td class="description last"><p>&#x540C;&#x65F6;&#x6700;&#x591A;&#x4E3A; <code>limit</code> &#x7684;&#x5F02;&#x6B65;&#x64CD;&#x4F5C;&#x6570;&#x91CF;&#x3002;</p></td>
         </tr>
 
     
@@ -669,8 +680,8 @@ containing the concatenated results of the <code>iteratee</code> function. Invok
 
             
 
-            <td class="description last"><p>A function to apply to each item in <code>coll</code>,
-which should use an array as its result. Invoked with (item, callback).</p></td>
+            <td class="description last"><p>&#x51FD;&#x6570;&#xFF0C;&#x5E94;&#x7528;&#x5230; <code>coll</code> &#x91CC;&#x7684;&#x6BCF;&#x4E00;&#x9879;&#xFF0C;
+&#x4EA7;&#x751F;&#x7684;&#x7ED3;&#x679C;&#x5C06;&#x4F1A;&#x653E;&#x5165;&#x6570;&#x7EC4;&#x3002; &#x4EE5; (item, callback) &#x8C03;&#x7528;&#x3002;</p></td>
         </tr>
 
     
@@ -695,10 +706,9 @@ which should use an array as its result. Invoked with (item, callback).</p></td>
 
             
 
-            <td class="description last"><p>A callback which is called after all the
-<code>iteratee</code> functions have finished, or an error occurs. Results is an array
-containing the concatenated results of the <code>iteratee</code> function. Invoked with
-(err, results).</p></td>
+            <td class="description last"><p>&#x5728;&#x6240;&#x6709; <code>iteratee</code> &#x51FD;&#x6570;&#x90FD;&#x7ED3;&#x675F;&#x540E;&#x88AB;&#x8C03;&#x7528;&#xFF0C;&#x6216;&#x8005;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;&#x9519;&#x8BEF;&#x3002;
+&#x7ED3;&#x679C;&#x662F; <code>iteratee</code> &#x51FD;&#x6570;&#x4EA7;&#x751F;&#x7684;&#x5408;&#x5E76;&#x6570;&#x7EC4;&#x3002;&#x8C03;&#x7528;&#xFF1A;
+(err, results)&#x3002;</p></td>
         </tr>
 
     
@@ -709,15 +719,35 @@ containing the concatenated results of the <code>iteratee</code> function. Invok
 
 
 <h5>&#x8FD4;&#x56DE;&#xFF1A;</h5>
+<ul>
+        <li>
+<div class="param-desc">
+    <p>&#x5FFD;&#x7565; callback &#x65F6;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; promise</p>
+</div>
 
+
+
+<dl class="param-type">
+    <dt>
+        &#x7C7B;&#x578B;
+    </dt>
+    <dd>
         
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
 <div class="param-desc">
     <p>A Promise, if no callback is passed</p>
 </div>
 
 
-
-    
+</li>
+    </ul>
 
 
 
@@ -787,7 +817,7 @@ containing the concatenated results of the <code>iteratee</code> function. Invok
 
     
 
-    <h4 class="name" id="concatSeries"><span class="type-signature">(static) </span>concatSeries<span class="signature">(coll, iteratee, callback<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="concatSeries"><span class="type-signature">(static) </span>concatSeries<span class="signature">(coll, iteratee, callback<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &#x2192; {Promise}</span></h4>
 
     
 
@@ -796,7 +826,7 @@ containing the concatenated results of the <code>iteratee</code> function. Invok
 <div class="description">
     <pre class="prettyprint source"><code>import concatSeries from &apos;async/concatSeries&apos;;
 </code></pre>
-<p>The same as <a href="#concat"><code>concat</code></a> but runs only a single async operation at a time.</p>
+<p>&#x7C7B;&#x4F3C; <a href="#concat"><code>concat</code></a>&#xFF0C;&#x4F46;&#x9650;&#x5236;&#x4E86;&#x540C;&#x65F6;&#x53EA;&#x80FD;&#x6709;&#x4E00;&#x4E2A;&#x5F02;&#x6B65;&#x64CD;&#x4F5C;</p>
 </div>
 
 
@@ -863,7 +893,7 @@ containing the concatenated results of the <code>iteratee</code> function. Invok
 
             
 
-            <td class="description last"><p>A collection to iterate over.</p></td>
+            <td class="description last"><p>&#x9700;&#x8981;&#x904D;&#x5386;&#x7684;&#x96C6;&#x5408;</p></td>
         </tr>
 
     
@@ -886,9 +916,8 @@ containing the concatenated results of the <code>iteratee</code> function. Invok
 
             
 
-            <td class="description last"><p>A function to apply to each item in <code>coll</code>.
-The iteratee should complete with an array an array of results.
-Invoked with (item, callback).</p></td>
+            <td class="description last"><p>&#x51FD;&#x6570;&#xFF0C;&#x5E94;&#x7528;&#x5230; <code>coll</code> &#x91CC;&#x7684;&#x6BCF;&#x4E00;&#x9879;&#xFF0C;
+&#x4EA7;&#x751F;&#x7684;&#x7ED3;&#x679C;&#x5C06;&#x4F1A;&#x653E;&#x5165;&#x6570;&#x7EC4;&#x3002; &#x4EE5; (item, callback) &#x8C03;&#x7528;&#x3002;</p></td>
         </tr>
 
     
@@ -913,10 +942,9 @@ Invoked with (item, callback).</p></td>
 
             
 
-            <td class="description last"><p>A callback which is called after all the
-<code>iteratee</code> functions have finished, or an error occurs. Results is an array
-containing the concatenated results of the <code>iteratee</code> function. Invoked with
-(err, results).</p></td>
+            <td class="description last"><p>&#x5728;&#x6240;&#x6709; <code>iteratee</code> &#x51FD;&#x6570;&#x90FD;&#x7ED3;&#x675F;&#x540E;&#x88AB;&#x8C03;&#x7528;&#xFF0C;&#x6216;&#x8005;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;&#x9519;&#x8BEF;&#x3002;
+&#x7ED3;&#x679C;&#x662F; <code>iteratee</code> &#x51FD;&#x6570;&#x4EA7;&#x751F;&#x7684;&#x5408;&#x5E76;&#x6570;&#x7EC4;&#x3002;&#x8C03;&#x7528;&#xFF1A;
+(err, results)&#x3002;</p></td>
         </tr>
 
     
@@ -927,15 +955,35 @@ containing the concatenated results of the <code>iteratee</code> function. Invok
 
 
 <h5>&#x8FD4;&#x56DE;&#xFF1A;</h5>
+<ul>
+        <li>
+<div class="param-desc">
+    <p>&#x5FFD;&#x7565; callback &#x65F6;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; promise</p>
+</div>
 
+
+
+<dl class="param-type">
+    <dt>
+        &#x7C7B;&#x578B;
+    </dt>
+    <dd>
         
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
 <div class="param-desc">
     <p>A Promise, if no callback is passed</p>
 </div>
 
 
-
-    
+</li>
+    </ul>
 
 
 
@@ -1705,13 +1753,11 @@ Result will be the first item in the array that passes the truth test
 <div class="description">
     <pre class="prettyprint source"><code>import each from &apos;async/each&apos;;
 </code></pre>
-<p>Applies the function <code>iteratee</code> to each item in <code>coll</code>, in parallel.
-The <code>iteratee</code> is called with an item from the list, and a callback for when
-it has finished. If the <code>iteratee</code> passes an error to its <code>callback</code>, the
-main <code>callback</code> (for the <code>each</code> function) is immediately called with the
-error.</p>
-<p>Note, that since this function applies <code>iteratee</code> to each item in parallel,
-there is no guarantee that the iteratee functions will complete in order.</p>
+<p>&#x4E3A; <code>coll</code> &#x5185;&#x6BCF;&#x4E00;&#x9879;&#x5E76;&#x53D1;&#x5730;&#x5E94;&#x7528;&#x51FD;&#x6570; <code>iteratee</code>&#x3002;
+&#x7528;&#x5217;&#x8868;&#x4E2D;&#x7684;&#x6BCF;&#x4E00;&#x9879;&#x6765;&#x8C03;&#x7528; <code>iteratee</code>&#xFF0C;&#x5E76;&#x5728;&#x5B8C;&#x6210;&#x540E;&#x8C03;&#x7528; callback&#x3002;
+&#x5982;&#x679C; <code>iteratee</code> &#x4F20;&#x9012;&#x4E00;&#x4E2A; error &#x7ED9;&#x5B83;&#x7684; <code>callback</code>&#xFF0C;
+&#x4F1A;&#x4EE5;&#x6B64; error &#x4E3A;&#x53C2;&#x6570;&#xFF0C;&#x7ACB;&#x5373;&#x8C03;&#x7528; <code>each</code> &#x51FD;&#x6570;&#x7684;&#x4E3B;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x7531;&#x4E8E;&#x6B64;&#x51FD;&#x6570;&#x4F1A;&#x5E76;&#x53D1;&#x7684;&#x5E94;&#x7528; <code>iteratee</code>&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x4FDD;&#x8BC1;&#x7ED3;&#x675F;&#x987A;&#x5E8F;&#x3002;</p>
 </div>
 
 
@@ -1778,7 +1824,7 @@ there is no guarantee that the iteratee functions will complete in order.</p>
 
             
 
-            <td class="description last"><p>A collection to iterate over.</p></td>
+            <td class="description last"><p>&#x9700;&#x8981;&#x904D;&#x5386;&#x7684;&#x96C6;&#x5408;</p></td>
         </tr>
 
     
@@ -1801,10 +1847,10 @@ there is no guarantee that the iteratee functions will complete in order.</p>
 
             
 
-            <td class="description last"><p>An async function to apply to
-each item in <code>coll</code>. Invoked with (item, callback).
-The array index is not passed to the iteratee.
-If you need the index, use <code>eachOf</code>.</p></td>
+            <td class="description last"><p>&#x5F02;&#x6B65;&#x51FD;&#x6570;&#xFF0C;&#x5E94;&#x7528;&#x5230; <code>coll</code> &#x91CC;&#x7684;&#x6BCF;&#x4E00;&#x9879;&#x3002;
+&#x7528;&#x6CD5;&#xFF1A;(item, callback)&#x3002;
+&#x6570;&#x7EC4;&#x7D22;&#x5F15;&#xFF08;index&#xFF09;&#x4E0D;&#x4F1A;&#x4F20;&#x5165; iteratee&#x3002;
+&#x5982;&#x679C;&#x9700;&#x8981;&#x7D22;&#x5F15;&#xFF08;index&#xFF09;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>eachOf</code>&#x3002;</p></td>
         </tr>
 
     
@@ -1829,8 +1875,8 @@ If you need the index, use <code>eachOf</code>.</p></td>
 
             
 
-            <td class="description last"><p>A callback which is called when all
-<code>iteratee</code> functions have finished, or an error occurs. Invoked with (err).</p></td>
+            <td class="description last"><p>&#x5F53;&#x6240;&#x6709;&#x9879;&#x76EE;&#x90FD;&#x7528; <code>iteratee</code> &#x5904;&#x7406;&#x5B8C;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x6B64; callback&#xFF0C;
+&#x6216;&#x5728;&#x51FA;&#x9519;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x7684;&#x662F;(err)&#x3002;</p></td>
         </tr>
 
     
@@ -1844,7 +1890,7 @@ If you need the index, use <code>eachOf</code>.</p></td>
 
         
 <div class="param-desc">
-    <p>a promise, if a callback is omitted</p>
+    <p>&#x5FFD;&#x7565; callback &#x65F6;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; promise</p>
 </div>
 
 
@@ -1866,32 +1912,31 @@ If you need the index, use <code>eachOf</code>.</p></td>
 
     <h5>&#x793A;&#x4F8B;</h5>
     
-    <pre class="prettyprint"><code>// assuming openFiles is an array of file names and saveFile is a function
-// to save the modified contents of that file:
+    <pre class="prettyprint"><code>// &#x5047;&#x8BBE; openFiles &#x662F;&#x6587;&#x4EF6;&#x540D;&#x6570;&#x7EC4;&#xFF0C;saveFile &#x662F;&#x4FDD;&#x5B58;&#x6587;&#x4EF6;&#x4FEE;&#x6539;&#x5185;&#x5BB9;&#x7684;&#x51FD;&#x6570;&#xFF1A;
 
 async.each(openFiles, saveFile, function(err){
-  // if any of the saves produced an error, err would equal that error
+  // &#x5982;&#x679C;&#x4EFB;&#x610F;&#x4E00;&#x6B21;&#x4FDD;&#x5B58;&#x4EA7;&#x751F;&#x4E00;&#x4E2A; error&#xFF0C;&#x8FD9;&#x4E2A; err &#x7B49;&#x4E8E;&#x90A3;&#x4E2A; error
 });
 
-// assuming openFiles is an array of file names
+// &#x5047;&#x8BBE; openFiles &#x662F;&#x6587;&#x4EF6;&#x540D;&#x6570;&#x7EC4;
 async.each(openFiles, function(file, callback) {
 
-    // Perform operation on file here.
+    // &#x5728;&#x6B64;&#x6267;&#x884C;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;
     console.log(&apos;Processing file &apos; + file);
 
     if( file.length &gt; 32 ) {
       console.log(&apos;This file name is too long&apos;);
       callback(&apos;File name too long&apos;);
     } else {
-      // Do work to process file here
+      // &#x5728;&#x6B64;&#x6267;&#x884C;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;
       console.log(&apos;File processed&apos;);
       callback();
     }
 }, function(err) {
-    // if any of the file processing produced an error, err would equal that error
+    //  &#x5982;&#x679C;&#x4EFB;&#x610F;&#x4E00;&#x6B21;&#x6587;&#x4EF6;&#x5904;&#x7406;&#x4EA7;&#x751F;&#x4E00;&#x4E2A; error&#xFF0C;&#x8FD9;&#x4E2A; err &#x7B49;&#x4E8E;&#x90A3;&#x4E2A; error
     if( err ) {
-      // One of the iterations produced an error.
-      // All processing will now stop.
+      // &#x53EA;&#x8981;&#x6709;&#x4E00;&#x6B21;&#x8FED;&#x4EE3;&#x4EA7;&#x751F; error&#xFF0C;
+      // &#x6240;&#x6709;&#x7684;&#x5904;&#x7406;&#x90FD;&#x4F1A;&#x7ACB;&#x5373;&#x505C;&#x6B62;&#x3002;
       console.log(&apos;A file failed to process&apos;);
     } else {
       console.log(&apos;All files have been processed successfully&apos;);
@@ -1968,7 +2013,7 @@ async.each(openFiles, function(file, callback) {
 <div class="description">
     <pre class="prettyprint source"><code>import eachLimit from &apos;async/eachLimit&apos;;
 </code></pre>
-<p>The same as <a href="#each"><code>each</code></a> but runs a maximum of <code>limit</code> async operations at a time.</p>
+<p>&#x548C; <a href="#each"><code>each</code></a> &#x4E00;&#x6837;&#xFF0C;&#x4F46;&#x9650;&#x5B9A;&#x4E86;&#x540C;&#x65F6;&#x6700;&#x591A;&#x6267;&#x884C; <code>limit</code> &#x6570;&#x7684;&#x5F02;&#x6B65;&#x64CD;&#x4F5C;</p>
 </div>
 
 
@@ -2035,7 +2080,7 @@ async.each(openFiles, function(file, callback) {
 
             
 
-            <td class="description last"><p>A collection to iterate over.</p></td>
+            <td class="description last"><p>&#x9700;&#x8981;&#x8FED;&#x4EE3;&#x7684;&#x96C6;&#x5408;</p></td>
         </tr>
 
     
@@ -2058,7 +2103,7 @@ async.each(openFiles, function(file, callback) {
 
             
 
-            <td class="description last"><p>The maximum number of async operations at a time.</p></td>
+            <td class="description last"><p>&#x540C;&#x65F6;&#x6700;&#x591A;&#x64CD;&#x4F5C;&#x7684;&#x6570;&#x91CF;</p></td>
         </tr>
 
     
@@ -2081,11 +2126,10 @@ async.each(openFiles, function(file, callback) {
 
             
 
-            <td class="description last"><p>An async function to apply to each item in
-<code>coll</code>.
-The array index is not passed to the iteratee.
-If you need the index, use <code>eachOfLimit</code>.
-Invoked with (item, callback).</p></td>
+            <td class="description last"><p>&#x5F02;&#x6B65;&#x51FD;&#x6570;&#xFF0C;&#x5E94;&#x7528;&#x5230; <code>coll</code> &#x91CC;&#x7684;&#x6BCF;&#x4E00;&#x9879;&#x3002;
+&#x7528;&#x6CD5;&#xFF1A;(item, callback)&#x3002;
+&#x6570;&#x7EC4;&#x7D22;&#x5F15;&#xFF08;index&#xFF09;&#x4E0D;&#x4F1A;&#x4F20;&#x5165; iteratee&#x3002;
+&#x5982;&#x679C;&#x9700;&#x8981;&#x7D22;&#x5F15;&#xFF08;index&#xFF09;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>eachOf</code>&#x3002;</p></td>
         </tr>
 
     
@@ -2110,8 +2154,8 @@ Invoked with (item, callback).</p></td>
 
             
 
-            <td class="description last"><p>A callback which is called when all
-<code>iteratee</code> functions have finished, or an error occurs. Invoked with (err).</p></td>
+            <td class="description last"><p>&#x5F53;&#x6240;&#x6709;&#x9879;&#x76EE;&#x90FD;&#x7528; <code>iteratee</code> &#x5904;&#x7406;&#x5B8C;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x6B64; callback&#xFF0C;
+&#x6216;&#x5728;&#x51FA;&#x9519;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x7684;&#x662F;(err)&#x3002;</p></td>
         </tr>
 
     
@@ -2125,7 +2169,7 @@ Invoked with (item, callback).</p></td>
 
         
 <div class="param-desc">
-    <p>a promise, if a callback is omitted</p>
+    <p>&#x5FFD;&#x7565; callback &#x65F6;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; promise</p>
 </div>
 
 
@@ -2221,8 +2265,7 @@ Invoked with (item, callback).</p></td>
 <div class="description">
     <pre class="prettyprint source"><code>import eachOf from &apos;async/eachOf&apos;;
 </code></pre>
-<p>Like <a href="#each"><code>each</code></a>, except that it passes the key (or index) as the second argument
-to the iteratee.</p>
+<p>&#x7C7B;&#x4F3C; <a href="#each"><code>each</code></a>&#xFF0C;&#x4F46;&#x5B83;&#x4F1A;&#x628A; key (&#x6216; index) &#x4F5C;&#x4E3A;&#x7B2C;&#x4E8C;&#x4E2A;&#x53C2;&#x6570;&#x4F20;&#x7ED9;&#x8FED;&#x4EE3;&#x5668;</p>
 </div>
 
 
@@ -2289,7 +2332,7 @@ to the iteratee.</p>
 
             
 
-            <td class="description last"><p>A collection to iterate over.</p></td>
+            <td class="description last"><p>&#x9700;&#x8981;&#x904D;&#x5386;&#x7684;&#x96C6;&#x5408;</p></td>
         </tr>
 
     
@@ -2312,10 +2355,9 @@ to the iteratee.</p>
 
             
 
-            <td class="description last"><p>A function to apply to each
-item in <code>coll</code>.
-The <code>key</code> is the item&apos;s key, or index in the case of an array.
-Invoked with (item, key, callback).</p></td>
+            <td class="description last"><p>&#x5F02;&#x6B65;&#x51FD;&#x6570;&#xFF0C;&#x5E94;&#x7528;&#x5230; <code>coll</code> &#x91CC;&#x7684;&#x6BCF;&#x4E00;&#x9879;&#x3002;
+<code>key</code> &#x662F;&#x6BCF;&#x4E00;&#x9879;&#x7684; key&#xFF1B;&#x5982;&#x679C;&#x662F;&#x4E2A;&#x6570;&#x7EC4;&#xFF0C;&#x5219;&#x662F;&#x7D22;&#x5F15;&#xFF08;index&#xFF09;
+&#x8FD9;&#x6837;&#x8C03;&#x7528;&#xFF1A;(item, key, callback)&#x3002;</p></td>
         </tr>
 
     
@@ -2340,8 +2382,8 @@ Invoked with (item, key, callback).</p></td>
 
             
 
-            <td class="description last"><p>A callback which is called when all
-<code>iteratee</code> functions have finished, or an error occurs. Invoked with (err).</p></td>
+            <td class="description last"><p>&#x5F53;&#x6240;&#x6709;&#x9879;&#x76EE;&#x90FD;&#x7528; <code>iteratee</code> &#x5904;&#x7406;&#x5B8C;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x6B64; callback&#xFF0C;
+&#x6216;&#x5728;&#x51FA;&#x9519;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x7684;&#x662F;(err)&#x3002;</p></td>
         </tr>
 
     
@@ -2355,7 +2397,7 @@ Invoked with (item, key, callback).</p></td>
 
         
 <div class="param-desc">
-    <p>a promise, if a callback is omitted</p>
+    <p>&#x5FFD;&#x7565; callback &#x65F6;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; promise</p>
 </div>
 
 
@@ -2392,7 +2434,7 @@ async.forEachOf(obj, function (value, key, callback) {
     });
 }, function (err) {
     if (err) console.error(err.message);
-    // configs is now a map of JSON data
+    // configs &#x73B0;&#x5728;&#x662F; JSON &#x6570;&#x636E;&#x7684;&#x6620;&#x5C04;
     doSomethingWith(configs);
 });</code></pre>
 
@@ -2473,8 +2515,7 @@ async.forEachOf(obj, function (value, key, callback) {
 <div class="description">
     <pre class="prettyprint source"><code>import eachOfLimit from &apos;async/eachOfLimit&apos;;
 </code></pre>
-<p>The same as <a href="#eachOf"><code>eachOf</code></a> but runs a maximum of <code>limit</code> async operations at a
-time.</p>
+<p>&#x7C7B;&#x4F3C; <a href="#eachOf"><code>eachOf</code></a>&#xFF0C;&#x4F46;&#x9650;&#x5236;&#x4E86;&#x540C;&#x65F6;&#x6700;&#x591A;&#x6709; <code>limit</code> &#x4E2A;&#x5F02;&#x6B65;&#x64CD;&#x4F5C;</p>
 </div>
 
 
@@ -2541,7 +2582,7 @@ time.</p>
 
             
 
-            <td class="description last"><p>A collection to iterate over.</p></td>
+            <td class="description last"><p>&#x9700;&#x8981;&#x904D;&#x5386;&#x7684;&#x96C6;&#x5408;</p></td>
         </tr>
 
     
@@ -2564,7 +2605,7 @@ time.</p>
 
             
 
-            <td class="description last"><p>The maximum number of async operations at a time.</p></td>
+            <td class="description last"><p>&#x540C;&#x65F6;&#x6700;&#x591A;&#x7684;&#x5F02;&#x6B65;&#x64CD;&#x4F5C;&#x6570;&#x91CF;</p></td>
         </tr>
 
     
@@ -2587,10 +2628,9 @@ time.</p>
 
             
 
-            <td class="description last"><p>An async function to apply to each
-item in <code>coll</code>. The <code>key</code> is the item&apos;s key, or index in the case of an
-array.
-Invoked with (item, key, callback).</p></td>
+            <td class="description last"><p>&#x5F02;&#x6B65;&#x51FD;&#x6570;&#xFF0C;&#x5E94;&#x7528;&#x5230; <code>coll</code> &#x91CC;&#x7684;&#x6BCF;&#x4E00;&#x9879;&#x3002;
+<code>key</code> &#x662F;&#x6BCF;&#x4E00;&#x9879;&#x7684; key&#xFF1B;&#x5982;&#x679C;&#x662F;&#x4E2A;&#x6570;&#x7EC4;&#xFF0C;&#x5219;&#x662F;&#x7D22;&#x5F15;&#xFF08;index&#xFF09;
+&#x8FD9;&#x6837;&#x8C03;&#x7528;&#xFF1A;(item, key, callback)&#x3002;</p></td>
         </tr>
 
     
@@ -2615,8 +2655,8 @@ Invoked with (item, key, callback).</p></td>
 
             
 
-            <td class="description last"><p>A callback which is called when all
-<code>iteratee</code> functions have finished, or an error occurs. Invoked with (err).</p></td>
+            <td class="description last"><p>&#x5F53;&#x6240;&#x6709;&#x9879;&#x76EE;&#x90FD;&#x7528; <code>iteratee</code> &#x5904;&#x7406;&#x5B8C;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x6B64; callback&#xFF0C;
+&#x6216;&#x5728;&#x51FA;&#x9519;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x7684;&#x662F;(err)&#x3002;</p></td>
         </tr>
 
     
@@ -2630,7 +2670,7 @@ Invoked with (item, key, callback).</p></td>
 
         
 <div class="param-desc">
-    <p>a promise, if a callback is omitted</p>
+    <p>&#x5FFD;&#x7565; callback &#x65F6;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; promise</p>
 </div>
 
 
@@ -2726,7 +2766,7 @@ Invoked with (item, key, callback).</p></td>
 <div class="description">
     <pre class="prettyprint source"><code>import eachOfSeries from &apos;async/eachOfSeries&apos;;
 </code></pre>
-<p>The same as <a href="#eachOf"><code>eachOf</code></a> but runs only a single async operation at a time.</p>
+<p>&#x7C7B;&#x4F3C; <a href="#eachOf"><code>eachOf</code></a> &#x4F46;&#x53EA;&#x6709;&#x5355;&#x4E2A;&#x5F02;&#x6B65;&#x64CD;&#x4F5C;&#x987A;&#x5E8F;&#x6267;&#x884C;</p>
 </div>
 
 
@@ -2793,7 +2833,7 @@ Invoked with (item, key, callback).</p></td>
 
             
 
-            <td class="description last"><p>A collection to iterate over.</p></td>
+            <td class="description last"><p>&#x9700;&#x8981;&#x904D;&#x5386;&#x7684;&#x96C6;&#x5408;</p></td>
         </tr>
 
     
@@ -2816,9 +2856,8 @@ Invoked with (item, key, callback).</p></td>
 
             
 
-            <td class="description last"><p>An async function to apply to each item in
-<code>coll</code>.
-Invoked with (item, key, callback).</p></td>
+            <td class="description last"><p>&#x5F02;&#x6B65;&#x51FD;&#x6570;&#xFF0C;&#x5E94;&#x7528;&#x5230; <code>coll</code> &#x91CC;&#x7684;&#x6BCF;&#x4E00;&#x9879;&#x3002;
+&#x8FD9;&#x6837;&#x8C03;&#x7528;&#xFF1A;(item, key, callback)&#x3002;</p></td>
         </tr>
 
     
@@ -2843,8 +2882,8 @@ Invoked with (item, key, callback).</p></td>
 
             
 
-            <td class="description last"><p>A callback which is called when all <code>iteratee</code>
-functions have finished, or an error occurs. Invoked with (err).</p></td>
+            <td class="description last"><p>&#x5F53;&#x6240;&#x6709;&#x9879;&#x76EE;&#x90FD;&#x7528; <code>iteratee</code> &#x5904;&#x7406;&#x5B8C;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x6B64; callback&#xFF0C;
+&#x6216;&#x5728;&#x51FA;&#x9519;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x7684;&#x662F;(err)&#x3002;</p></td>
         </tr>
 
     
@@ -2858,7 +2897,7 @@ functions have finished, or an error occurs. Invoked with (err).</p></td>
 
         
 <div class="param-desc">
-    <p>a promise, if a callback is omitted</p>
+    <p>&#x5FFD;&#x7565; callback &#x65F6;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; promise</p>
 </div>
 
 
@@ -2954,9 +2993,8 @@ functions have finished, or an error occurs. Invoked with (err).</p></td>
 <div class="description">
     <pre class="prettyprint source"><code>import eachSeries from &apos;async/eachSeries&apos;;
 </code></pre>
-<p>The same as <a href="#each"><code>each</code></a> but runs only a single async operation at a time.</p>
-<p>Note, that unlike <a href="#each"><code>each</code></a>, this function applies iteratee to each item
-in series and therefore the iteratee functions will complete in order.</p>
+<p>&#x7C7B;&#x4F3C; <a href="#each"><code>each</code></a> &#x4F46;&#x53EA;&#x6709;&#x5355;&#x4E2A;&#x5F02;&#x6B65;&#x64CD;&#x4F5C;&#x987A;&#x5E8F;&#x6267;&#x884C;</p>
+<p>&#x6CE8;&#x610F;&#xFF0C;&#x548C; <a href="#each"><code>each</code></a> &#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;&#x6B64;&#x51FD;&#x6570;&#x4F1A;&#x4EE5;&#x4E32;&#x884C;&#xFF0C;&#x6309;&#x987A;&#x5E8F;&#x9010;&#x4E2A;&#x5E94;&#x7528;&#x6BCF;&#x4E00;&#x9879;&#x3002;</p>
 </div>
 
 
@@ -3023,7 +3061,7 @@ in series and therefore the iteratee functions will complete in order.</p>
 
             
 
-            <td class="description last"><p>A collection to iterate over.</p></td>
+            <td class="description last"><p>&#x9700;&#x8981;&#x904D;&#x5386;&#x7684;&#x96C6;&#x5408;</p></td>
         </tr>
 
     
@@ -3046,11 +3084,10 @@ in series and therefore the iteratee functions will complete in order.</p>
 
             
 
-            <td class="description last"><p>An async function to apply to each
-item in <code>coll</code>.
-The array index is not passed to the iteratee.
-If you need the index, use <code>eachOfSeries</code>.
-Invoked with (item, callback).</p></td>
+            <td class="description last"><p>&#x5F02;&#x6B65;&#x51FD;&#x6570;&#xFF0C;&#x5E94;&#x7528;&#x5230; <code>coll</code> &#x91CC;&#x7684;&#x6BCF;&#x4E00;&#x9879;&#x3002;
+&#x7528;&#x6CD5;&#xFF1A;(item, callback)&#x3002;
+&#x6570;&#x7EC4;&#x7D22;&#x5F15;&#xFF08;index&#xFF09;&#x4E0D;&#x4F1A;&#x4F20;&#x5165; iteratee&#x3002;
+&#x5982;&#x679C;&#x9700;&#x8981;&#x7D22;&#x5F15;&#xFF08;index&#xFF09;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>eachOfSeries</code>&#x3002;</p></td>
         </tr>
 
     
@@ -3075,8 +3112,8 @@ Invoked with (item, callback).</p></td>
 
             
 
-            <td class="description last"><p>A callback which is called when all
-<code>iteratee</code> functions have finished, or an error occurs. Invoked with (err).</p></td>
+            <td class="description last"><p>&#x5F53;&#x6240;&#x6709;&#x9879;&#x76EE;&#x90FD;&#x7528; <code>iteratee</code> &#x5904;&#x7406;&#x5B8C;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x6B64; callback&#xFF0C;
+&#x6216;&#x5728;&#x51FA;&#x9519;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x7684;&#x662F;(err)&#x3002;</p></td>
         </tr>
 
     
@@ -3090,7 +3127,7 @@ Invoked with (item, callback).</p></td>
 
         
 <div class="param-desc">
-    <p>a promise, if a callback is omitted</p>
+    <p>&#x5FFD;&#x7565; callback &#x65F6;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; promise</p>
 </div>
 
 

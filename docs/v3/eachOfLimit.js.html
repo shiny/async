@@ -80,8 +80,7 @@ import wrapAsync from &apos;./internal/wrapAsync&apos;;
 import awaitify from &apos;./internal/awaitify&apos;
 
 /**
- * The same as [`eachOf`]{@link module:Collections.eachOf} but runs a maximum of `limit` async operations at a
- * time.
+ * &#x7C7B;&#x4F3C; [`eachOf`]{@link module:Collections.eachOf}&#xFF0C;&#x4F46;&#x9650;&#x5236;&#x4E86;&#x540C;&#x65F6;&#x6700;&#x591A;&#x6709; `limit` &#x4E2A;&#x5F02;&#x6B65;&#x64CD;&#x4F5C;
  *
  * @name eachOfLimit
  * @static
@@ -90,15 +89,14 @@ import awaitify from &apos;./internal/awaitify&apos;
  * @see [async.eachOf]{@link module:Collections.eachOf}
  * @alias forEachOfLimit
  * @category Collection
- * @param {Array|Iterable|AsyncIterable|Object} coll - A collection to iterate over.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {AsyncFunction} iteratee - An async function to apply to each
- * item in `coll`. The `key` is the item&apos;s key, or index in the case of an
- * array.
- * Invoked with (item, key, callback).
- * @param {Function} [callback] - A callback which is called when all
- * `iteratee` functions have finished, or an error occurs. Invoked with (err).
- * @returns {Promise} a promise, if a callback is omitted
+ * @param {Array|Iterable|AsyncIterable|Object} coll - &#x9700;&#x8981;&#x904D;&#x5386;&#x7684;&#x96C6;&#x5408;
+ * @param {number} limit - &#x540C;&#x65F6;&#x6700;&#x591A;&#x7684;&#x5F02;&#x6B65;&#x64CD;&#x4F5C;&#x6570;&#x91CF;
+ * @param {AsyncFunction} iteratee - &#x5F02;&#x6B65;&#x51FD;&#x6570;&#xFF0C;&#x5E94;&#x7528;&#x5230; `coll` &#x91CC;&#x7684;&#x6BCF;&#x4E00;&#x9879;&#x3002;
+ * `key` &#x662F;&#x6BCF;&#x4E00;&#x9879;&#x7684; key&#xFF1B;&#x5982;&#x679C;&#x662F;&#x4E2A;&#x6570;&#x7EC4;&#xFF0C;&#x5219;&#x662F;&#x7D22;&#x5F15;&#xFF08;index&#xFF09;
+ * &#x8FD9;&#x6837;&#x8C03;&#x7528;&#xFF1A;(item, key, callback)&#x3002;
+ * @param {Function} [callback] - &#x5F53;&#x6240;&#x6709;&#x9879;&#x76EE;&#x90FD;&#x7528; `iteratee` &#x5904;&#x7406;&#x5B8C;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x6B64; callback&#xFF0C;
+ * &#x6216;&#x5728;&#x51FA;&#x9519;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x7684;&#x662F;(err)&#x3002;
+ * @returns {Promise} &#x5FFD;&#x7565; callback &#x65F6;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; promise
  */
 function eachOfLimit(coll, limit, iteratee, callback) {
     return _eachOfLimit(limit)(coll, wrapAsync(iteratee), callback);

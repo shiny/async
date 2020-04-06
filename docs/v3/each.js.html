@@ -81,14 +81,12 @@ import wrapAsync from &apos;./internal/wrapAsync&apos;
 import awaitify from &apos;./internal/awaitify&apos;
 
 /**
- * Applies the function `iteratee` to each item in `coll`, in parallel.
- * The `iteratee` is called with an item from the list, and a callback for when
- * it has finished. If the `iteratee` passes an error to its `callback`, the
- * main `callback` (for the `each` function) is immediately called with the
- * error.
+ * &#x4E3A; `coll` &#x5185;&#x6BCF;&#x4E00;&#x9879;&#x5E76;&#x53D1;&#x5730;&#x5E94;&#x7528;&#x51FD;&#x6570; `iteratee`&#x3002;
+ * &#x7528;&#x5217;&#x8868;&#x4E2D;&#x7684;&#x6BCF;&#x4E00;&#x9879;&#x6765;&#x8C03;&#x7528; `iteratee`&#xFF0C;&#x5E76;&#x5728;&#x5B8C;&#x6210;&#x540E;&#x8C03;&#x7528; callback&#x3002;
+ * &#x5982;&#x679C; `iteratee` &#x4F20;&#x9012;&#x4E00;&#x4E2A; error &#x7ED9;&#x5B83;&#x7684; `callback`&#xFF0C;
+ * &#x4F1A;&#x4EE5;&#x6B64; error &#x4E3A;&#x53C2;&#x6570;&#xFF0C;&#x7ACB;&#x5373;&#x8C03;&#x7528; `each` &#x51FD;&#x6570;&#x7684;&#x4E3B;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;
  *
- * Note, that since this function applies `iteratee` to each item in parallel,
- * there is no guarantee that the iteratee functions will complete in order.
+ * &#x6CE8;&#x610F;&#xFF1A;&#x7531;&#x4E8E;&#x6B64;&#x51FD;&#x6570;&#x4F1A;&#x5E76;&#x53D1;&#x7684;&#x5E94;&#x7528; `iteratee`&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x4FDD;&#x8BC1;&#x7ED3;&#x675F;&#x987A;&#x5E8F;&#x3002;
  *
  * @name each
  * @static
@@ -96,42 +94,41 @@ import awaitify from &apos;./internal/awaitify&apos;
  * @method
  * @alias forEach
  * @category Collection
- * @param {Array|Iterable|AsyncIterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - An async function to apply to
- * each item in `coll`. Invoked with (item, callback).
- * The array index is not passed to the iteratee.
- * If you need the index, use `eachOf`.
- * @param {Function} [callback] - A callback which is called when all
- * `iteratee` functions have finished, or an error occurs. Invoked with (err).
- * @returns {Promise} a promise, if a callback is omitted
+ * @param {Array|Iterable|AsyncIterable|Object} coll - &#x9700;&#x8981;&#x904D;&#x5386;&#x7684;&#x96C6;&#x5408;
+ * @param {AsyncFunction} iteratee - &#x5F02;&#x6B65;&#x51FD;&#x6570;&#xFF0C;&#x5E94;&#x7528;&#x5230; `coll` &#x91CC;&#x7684;&#x6BCF;&#x4E00;&#x9879;&#x3002;
+ * &#x7528;&#x6CD5;&#xFF1A;(item, callback)&#x3002;
+ * &#x6570;&#x7EC4;&#x7D22;&#x5F15;&#xFF08;index&#xFF09;&#x4E0D;&#x4F1A;&#x4F20;&#x5165; iteratee&#x3002;
+ * &#x5982;&#x679C;&#x9700;&#x8981;&#x7D22;&#x5F15;&#xFF08;index&#xFF09;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; `eachOf`&#x3002;
+ * @param {Function} [callback] - &#x5F53;&#x6240;&#x6709;&#x9879;&#x76EE;&#x90FD;&#x7528; `iteratee` &#x5904;&#x7406;&#x5B8C;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x6B64; callback&#xFF0C;
+ * &#x6216;&#x5728;&#x51FA;&#x9519;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x7684;&#x662F;(err)&#x3002;
+ * @returns {Promise} &#x5FFD;&#x7565; callback &#x65F6;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; promise
  * @example
  *
- * // assuming openFiles is an array of file names and saveFile is a function
- * // to save the modified contents of that file:
+ * // &#x5047;&#x8BBE; openFiles &#x662F;&#x6587;&#x4EF6;&#x540D;&#x6570;&#x7EC4;&#xFF0C;saveFile &#x662F;&#x4FDD;&#x5B58;&#x6587;&#x4EF6;&#x4FEE;&#x6539;&#x5185;&#x5BB9;&#x7684;&#x51FD;&#x6570;&#xFF1A;
  *
  * async.each(openFiles, saveFile, function(err){
- *   // if any of the saves produced an error, err would equal that error
+ *   // &#x5982;&#x679C;&#x4EFB;&#x610F;&#x4E00;&#x6B21;&#x4FDD;&#x5B58;&#x4EA7;&#x751F;&#x4E00;&#x4E2A; error&#xFF0C;&#x8FD9;&#x4E2A; err &#x7B49;&#x4E8E;&#x90A3;&#x4E2A; error
  * });
  *
- * // assuming openFiles is an array of file names
+ * // &#x5047;&#x8BBE; openFiles &#x662F;&#x6587;&#x4EF6;&#x540D;&#x6570;&#x7EC4;
  * async.each(openFiles, function(file, callback) {
  *
- *     // Perform operation on file here.
+ *     // &#x5728;&#x6B64;&#x6267;&#x884C;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;
  *     console.log(&apos;Processing file &apos; + file);
  *
  *     if( file.length &gt; 32 ) {
  *       console.log(&apos;This file name is too long&apos;);
  *       callback(&apos;File name too long&apos;);
  *     } else {
- *       // Do work to process file here
+ *       // &#x5728;&#x6B64;&#x6267;&#x884C;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;
  *       console.log(&apos;File processed&apos;);
  *       callback();
  *     }
  * }, function(err) {
- *     // if any of the file processing produced an error, err would equal that error
+ *     //  &#x5982;&#x679C;&#x4EFB;&#x610F;&#x4E00;&#x6B21;&#x6587;&#x4EF6;&#x5904;&#x7406;&#x4EA7;&#x751F;&#x4E00;&#x4E2A; error&#xFF0C;&#x8FD9;&#x4E2A; err &#x7B49;&#x4E8E;&#x90A3;&#x4E2A; error
  *     if( err ) {
- *       // One of the iterations produced an error.
- *       // All processing will now stop.
+ *       // &#x53EA;&#x8981;&#x6709;&#x4E00;&#x6B21;&#x8FED;&#x4EE3;&#x4EA7;&#x751F; error&#xFF0C;
+ *       // &#x6240;&#x6709;&#x7684;&#x5904;&#x7406;&#x90FD;&#x4F1A;&#x7ACB;&#x5373;&#x505C;&#x6B62;&#x3002;
  *       console.log(&apos;A file failed to process&apos;);
  *     } else {
  *       console.log(&apos;All files have been processed successfully&apos;);
