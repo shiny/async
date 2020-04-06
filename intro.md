@@ -286,7 +286,7 @@ Async 也有第三方的类型定义。
 npm i -D @types/async
 ```
 
-建议 `tsconfig.json` 里 target 为 ES2017 及更高版本，这样 `async` 函数就能被保留，无需转码：
+为了保留 `async` 函数，无需转码，建议 `tsconfig.json` 里 target 为 ES2017 或更高版本：
 
 ```json
 {
