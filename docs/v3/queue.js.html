@@ -84,74 +84,62 @@ import wrapAsync from &apos;./internal/wrapAsync&apos;;
  * @memberOf module:ControlFlow
  * @property {Function} length - &#x8FD4;&#x56DE;&#x7B49;&#x5F85;&#x5904;&#x7406;&#x9879;&#x76EE;&#x7684;&#x6570;&#x91CF;&#x7684;&#x51FD;&#x6570;&#x3002;
  * &#x901A;&#x8FC7; `queue.length()` &#x8C03;&#x7528;&#x3002;
- * @property {boolean} started - a boolean indicating whether or not any
- * items have been pushed and processed by the queue.
- * @property {Function} running - a function returning the number of items
- * currently being processed. Invoke with `queue.running()`.
- * @property {Function} workersList - a function returning the array of items
- * currently being processed. Invoke with `queue.workersList()`.
- * @property {Function} idle - a function returning false if there are items
- * waiting or being processed, or true if not. Invoke with `queue.idle()`.
- * @property {number} concurrency - an integer for determining how many `worker`
- * functions should be run in parallel. This property can be changed after a
- * `queue` is created to alter the concurrency on-the-fly.
- * @property {number} payload - an integer that specifies how many items are
- * passed to the worker function at a time. only applies if this is a
- * [cargo]{@link module:ControlFlow.cargo} object
- * @property {AsyncFunction} push - add a new task to the `queue`. Calls `callback`
- * once the `worker` has finished processing the task. Instead of a single task,
- * a `tasks` array can be submitted. The respective callback is used for every
- * task in the list. Invoke with `queue.push(task, [callback])`,
- * @property {AsyncFunction} unshift - add a new task to the front of the `queue`.
- * Invoke with `queue.unshift(task, [callback])`.
- * @property {AsyncFunction} pushAsync - the same as `q.push`, except this returns
- * a promise that rejects if an error occurs.
- * @property {AsyncFunction} unshirtAsync - the same as `q.unshift`, except this returns
- * a promise that rejects if an error occurs.
- * @property {Function} remove - remove items from the queue that match a test
- * function.  The test function will be passed an object with a `data` property,
- * and a `priority` property, if this is a
- * [priorityQueue]{@link module:ControlFlow.priorityQueue} object.
- * Invoked with `queue.remove(testFn)`, where `testFn` is of the form
- * `function ({data, priority}) {}` and returns a Boolean.
- * @property {Function} saturated - a function that sets a callback that is
- * called when the number of running workers hits the `concurrency` limit, and
- * further tasks will be queued.  If the callback is omitted, `q.saturated()`
- * returns a promise for the next occurrence.
- * @property {Function} unsaturated - a function that sets a callback that is
- * called when the number of running workers is less than the `concurrency` &amp;
- * `buffer` limits, and further tasks will not be queued. If the callback is
- * omitted, `q.unsaturated()` returns a promise for the next occurrence.
- * @property {number} buffer - A minimum threshold buffer in order to say that
- * the `queue` is `unsaturated`.
- * @property {Function} empty - a function that sets a callback that is called
- * when the last item from the `queue` is given to a `worker`. If the callback
- * is omitted, `q.empty()` returns a promise for the next occurrence.
- * @property {Function} drain - a function that sets a callback that is called
- * when the last item from the `queue` has returned from the `worker`. If the
- * callback is omitted, `q.drain()` returns a promise for the next occurrence.
- * @property {Function} error - a function that sets a callback that is called
- * when a task errors. Has the signature `function(error, task)`. If the
- * callback is omitted, `error()` returns a promise that rejects on the next
- * error.
- * @property {boolean} paused - a boolean for determining whether the queue is
- * in a paused state.
- * @property {Function} pause - a function that pauses the processing of tasks
- * until `resume()` is called. Invoke with `queue.pause()`.
- * @property {Function} resume - a function that resumes the processing of
- * queued tasks when the queue is paused. Invoke with `queue.resume()`.
- * @property {Function} kill - a function that removes the `drain` callback and
- * empties remaining tasks from the queue forcing it to go idle. No more tasks
- * should be pushed to the queue after calling this function. Invoke with `queue.kill()`.
+ * @property {boolean} started - boolean &#x503C;&#xFF0C;&#x662F;&#x5426;&#x6709;&#x4EFB;&#x52A1;&#x5DF2;&#x7ECF;&#x63A8;&#x5165;&#x961F;&#x5217;&#x6216;&#x5DF2;&#x88AB;&#x5904;&#x7406;&#x8FC7;&#x3002;
+ * @property {Function} running - &#x51FD;&#x6570;&#xFF0C;&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x6B63;&#x5728;&#x5904;&#x7406;&#x7684;&#x4EFB;&#x52A1;&#x6570;&#x91CF;&#x3002;
+ * &#x7528;&#x6CD5;&#xFF1A;`queue.running()`&#x3002;
+ * @property {Function} workersList - &#x51FD;&#x6570;&#xFF0C;&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x6B63;&#x5728;&#x5904;&#x7406;&#x7684;&#x4EFB;&#x52A1;&#x6570;&#x7EC4;&#x3002;
+ * &#x7528;&#x6CD5;&#xFF1A;`queue.workersList()`&#x3002;
+ * @property {Function} idle - &#x51FD;&#x6570;&#xFF0C;&#x5F53;&#x6709;&#x4EFB;&#x52A1;&#x7B49;&#x5F85;&#x5904;&#x7406;&#x65F6;&#xFF0C;&#x8FD4;&#x56DE; false&#xFF1B;&#x5426;&#x5219;&#x8FD4;&#x56DE; true&#x3002;
+ * &#x7528;&#x6CD5;&#xFF1A;`queue.idle()`&#x3002;
+ * @property {number} concurrency - &#x6574;&#x578B;&#x503C;&#xFF0C;&#x51B3;&#x5B9A;&#x4E86;&#x591A;&#x5C11; `worker` &#x51FD;&#x6570;&#x53EF;&#x4EE5;&#x5E76;&#x53D1;&#x8FD0;&#x884C;&#x3002;
+ * `queue` &#x521B;&#x5EFA;&#x540E;&#xFF0C;&#x5728;&#x8FD0;&#x884C;&#x4E2D;&#x4E5F;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;&#x6B64;&#x5C5E;&#x6027;&#x3002;
+ * @property {number} payload - integer &#x503C;&#xFF0C;&#x6307;&#x5B9A;&#x4E86;&#x6BCF;&#x6B21;&#x4F20;&#x7ED9; work &#x51FD;&#x6570;&#x7684;&#x4EFB;&#x52A1;&#x6570;&#x91CF;&#x3002;
+ * &#x4EC5;&#x5728; [cargo]{@link module:ControlFlow.cargo} &#x5BF9;&#x8C61;&#x4E2D;&#x751F;&#x6548;&#x3002;
+ * @property {AsyncFunction} push - &#x6DFB;&#x52A0;&#x65B0;&#x4EFB;&#x52A1;&#x5230; `queue`&#x3002; `worker` &#x5904;&#x7406;&#x5B8C;&#x4EFB;&#x52A1;&#x540E;&#xFF0C;&#x4F1A;&#x8C03;&#x7528; `callback`&#x3002;
+ * &#x4E0D;&#x4EC5;&#x53EF;&#x4EE5;&#x4F20;&#x5165;&#x5355;&#x4E2A;&#x4EFB;&#x52A1;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x63D0;&#x4EA4; `tasks` &#x6570;&#x7EC4;&#x3002;
+ * &#x961F;&#x5217;&#x4E2D;&#x6BCF;&#x4E2A;&#x4EFB;&#x52A1;&#x7ED3;&#x675F;&#x540E;&#x90FD;&#x4F1A;&#x8C03;&#x7528; callback&#x3002;
+ * &#x7528;&#x6CD5;&#xFF1A;`queue.push(task, [callback])`&#x3002;
+ * @property {AsyncFunction} unshift - &#x5728; `queue` &#x524D;&#x7AEF;&#x63A8;&#x5165;&#x4EFB;&#x52A1;&#x3002;
+ * &#x7528;&#x6CD5;&#xFF1A;`queue.unshift(task, [callback])`&#x3002;
+ * @property {AsyncFunction} pushAsync - &#x548C; `q.push` &#x4E00;&#x6837;&#xFF0C;&#x9664;&#x4E86;&#x5B83;&#x4F1A;&#x8FD4;&#x56DE; Promise &#x5BF9;&#x8C61;&#xFF0C;
+ * &#x5E76;&#x5728;&#x51FA;&#x9519;&#x65F6;&#x4EA7;&#x751F; reject&#x3002;
+ * @property {AsyncFunction} unshirtAsync - &#x548C; `q.unshift` &#x4E00;&#x6837;&#xFF0C;&#x9664;&#x4E86;&#x5B83;&#x4F1A;&#x8FD4;&#x56DE; Promise &#x5BF9;&#x8C61;&#xFF0C;
+ * &#x5E76;&#x5728;&#x51FA;&#x9519;&#x65F6;&#x4EA7;&#x751F; reject&#x3002;
+ * @property {Function} remove - &#x4F7F;&#x7528;&#x6D4B;&#x8BD5;&#x51FD;&#x6570;&#x68C0;&#x6D4B;&#xFF0C;&#x5982;&#x679C;&#x5339;&#x914D;&#x5219;&#x4F1A;&#x79FB;&#x9664;&#x4EFB;&#x52A1;&#x3002;
+ * &#x5982;&#x679C;&#x662F; [priorityQueue]{@link module:ControlFlow.priorityQueue} &#x5BF9;&#x8C61;&#xFF0C;
+ * test &#x51FD;&#x6570;&#x4F1A;&#x4F20;&#x5165;&#x4E00;&#x4E2A;&#x5177;&#x6709; `data` &#x548C; `priority` &#x5C5E;&#x6027;&#x7684; object&#x3002;
+ * &#x7528;&#x6CD5;&#xFF1A;`queue.remove(testFn)`&#xFF0C;&#x5176;&#x4E2D; `testFn` &#x7684;&#x5F62;&#x5F0F;&#x662F;&#xFF1A;
+ * `function ({data, priority}) {}`&#xFF0C;&#x5E76;&#x9700;&#x8981;&#x8FD4;&#x56DE; Boolean&#x3002;
+ * @property {Function} saturated - &#x9971;&#x548C;&#x3002;&#x51FD;&#x6570;&#x8BBE;&#x7F6E;&#x4E86;&#x4E00;&#x4E2A;callback&#xFF0C;&#x5F53;&#x8FD0;&#x884C;&#x7684; worker &#x6570;&#x91CF;
+ * &#x9047;&#x5230; `concurrency` &#x9650;&#x5236;&#x3001;&#x66F4;&#x591A;&#x4EFB;&#x52A1;&#x5C06;&#x4F1A;&#x6392;&#x961F;&#x65F6;&#x89E6;&#x53D1;&#x3002;
+ * &#x5982;&#x679C;&#x7701;&#x7565;&#x4E86; callback&#xFF0C;`q.saturated()` &#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; Promise &#x7528;&#x4E8E;&#x4E0B;&#x6B21;&#x4E8B;&#x4EF6;&#x7684;&#x53D1;&#x751F;&#x3002;
+ * @property {Function} unsaturated - &#x4E0D;&#x9971;&#x548C;&#x3002;&#x51FD;&#x6570;&#x8BBE;&#x7F6E;&#x4E86;&#x4E00;&#x4E2A;callback&#xFF0C;&#x5F53;&#x8FD0;&#x884C;&#x7684; worker &#x6570;&#x91CF;
+ * &#x5C11;&#x4E8E; `concurrency` &#x548C; `buffer` &#x9650;&#x5236;&#xFF0C;&#x4E0D;&#x4F1A;&#x518D;&#x6709;&#x4EFB;&#x52A1;&#x6392;&#x961F;&#x65F6;&#x89E6;&#x53D1;&#x3002;
+ * &#x5982;&#x679C;&#x7701;&#x7565;&#x4E86; callback&#xFF0C;`q.unsaturated()` &#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; Promise &#x7528;&#x4E8E;&#x4E0B;&#x6B21;&#x4E8B;&#x4EF6;&#x7684;&#x53D1;&#x751F;&#x3002;
+ * @property {number} buffer - &#x8BA4;&#x5B9A; `queue` &#x4E3A;&#x4E0D;&#x9971;&#x548C;&#xFF08;`unsaturated`&#xFF09;&#x7684;&#x6700;&#x5C0F;&#x7F13;&#x51B2;&#x9608;&#x503C;
+ * @property {Function} empty - &#x5F53;&#x961F;&#x5217;&#x4E2D;&#x6700;&#x540E;&#x4E00;&#x9879;&#x4EFB;&#x52A1;&#x4ECE; `queue` &#x5206;&#x914D;&#x5230; `worker` &#x65F6;&#x89E6;&#x53D1;&#x8BBE;&#x7F6E;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;
+ * &#x5982;&#x679C;&#x7701;&#x7565;&#x4E86; callback&#xFF0C;`q.empty()` &#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; Promise &#x7528;&#x4E8E;&#x4E0B;&#x6B21;&#x4E8B;&#x4EF6;&#x7684;&#x53D1;&#x751F;&#x3002;
+ * @property {Function} drain - &#x5F53;&#x961F;&#x5217;&#x4E2D;&#x6700;&#x540E;&#x4E00;&#x9879;&#x4EFB;&#x52A1;&#x4ECE; `worker` &#x8FD4;&#x56DE;&#x65F6;&#x89E6;&#x53D1;&#x8BBE;&#x7F6E;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;
+ * &#x5982;&#x679C;&#x7701;&#x7565;&#x4E86; callback&#xFF0C;`q.drain()` &#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; Promise &#x7528;&#x4E8E;&#x4E0B;&#x6B21;&#x4E8B;&#x4EF6;&#x7684;&#x53D1;&#x751F;&#x3002;
+ * @property {Function} error - &#x8BBE;&#x7F6E;&#x5355;&#x4E2A;&#x4EFB;&#x52A1;&#x51FA;&#x9519;&#x65F6;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;
+ * &#x51FD;&#x6570;&#x7B7E;&#x540D;&#xFF1A;`function(error, task)`&#x3002;
+ * &#x5982;&#x679C;&#x7701;&#x7565;&#x4E86; callback&#xFF0C;`error()` &#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; Promise&#xFF0C;&#x5E76;&#x5728;&#x4E0B;&#x6B21;&#x51FA;&#x9519;&#x65F6; reject&#x3002;
+ * @property {boolean} paused - &#x6307;&#x793A;&#x961F;&#x5217;&#x662F;&#x5426;&#x5904;&#x4E8E;&#x6682;&#x505C;&#x72B6;&#x6001;&#x7684; boolean &#x503C;
+ * @property {Function} pause - &#x4F7F;&#x961F;&#x5217;&#x6682;&#x505C;&#xFF0C;&#x76F4;&#x81F3;&#x8C03;&#x7528; `resume()` &#x540E;&#x7EE7;&#x7EED;&#x3002;
+ * &#x7528;&#x6CD5;&#xFF1A;`queue.pause()`&#x3002;
+ * @property {Function} resume - &#x7EE7;&#x7EED;&#x8FD0;&#x884C;&#x6682;&#x505C;&#x4E2D;&#x7684;&#x961F;&#x5217;&#x3002;
+ * &#x7528;&#x6CD5;&#xFF1A;`queue.resume()`&#x3002;
+ * @property {Function} kill - &#x8BE5;&#x51FD;&#x6570;&#x79FB;&#x9664;&#x6240;&#x6709; `drain` &#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x6E05;&#x7A7A;&#x4EFB;&#x52A1;&#xFF0C;&#x5F3A;&#x5236;&#x961F;&#x5217;&#x8FDB;&#x5165;
+ * &#x95F2;&#x7F6E;&#x6A21;&#x5F0F;&#x3002;&#x8C03;&#x7528;&#x6B64;&#x51FD;&#x6570;&#x540E;&#xFF0C;&#x4E0D;&#x5E94;&#x518D;&#x628A;&#x4EFB;&#x52A1;&#x63A8;&#x5165;&#x961F;&#x5217;&#x3002; &#x7528;&#x6CD5;&#xFF1A;`queue.kill()`&#x3002;
  *
  * @example
  * const q = async.queue(worker, 2)
  * q.push(item1)
  * q.push(item2)
  * q.push(item3)
- * // queues are iterable, spread into an array to inspect
+ * // queue &#x662F;&#x53EF;&#x8FED;&#x4EE3;&#x7684;&#xFF0C;&#x5C55;&#x5F00;&#x6210; array &#x540E;&#x68C0;&#x6D4B;
  * const items = [...q] // [item1, item2, item3]
- * // or use for of
+ * // &#x6216;&#x4F7F;&#x7528; for of
  * for (let item of q) {
  *     console.log(item)
  * }
@@ -159,7 +147,7 @@ import wrapAsync from &apos;./internal/wrapAsync&apos;;
  * q.drain(() =&gt; {
  *     console.log(&apos;all done&apos;)
  * })
- * // or
+ * // &#x6216;
  * await q.drain()
  */
 
@@ -174,48 +162,47 @@ import wrapAsync from &apos;./internal/wrapAsync&apos;;
  * @memberOf module:ControlFlow
  * @method
  * @category Control Flow
- * @param {AsyncFunction} worker - An async function for processing a queued task.
- * If you want to handle errors from an individual task, pass a callback to
- * `q.push()`. Invoked with (task, callback).
- * @param {number} [concurrency=1] - An `integer` for determining how many
- * `worker` functions should be run in parallel.  If omitted, the concurrency
- * defaults to `1`.  If the concurrency is `0`, an error is thrown.
- * @returns {module:ControlFlow.QueueObject} A queue object to manage the tasks. Callbacks can be
- * attached as certain properties to listen for specific events during the
- * lifecycle of the queue.
+ * @param {AsyncFunction} worker - &#x5904;&#x7406;&#x961F;&#x5217;&#x4EFB;&#x52A1;&#x7684;&#x5F02;&#x6B65;&#x51FD;&#x6570;&#x3002;
+ * &#x5982;&#x679C;&#x60F3;&#x8981;&#x5904;&#x7406;&#x5355;&#x72EC;&#x7684;&#x4EFB;&#x52A1;&#x4E2D;&#x7684;&#x9519;&#x8BEF;&#xFF0C;&#x4E3A; `q.push()` &#x4F20;&#x5165; callback&#x3002;
+ * &#x8C03;&#x7528;&#x53C2;&#x6570;&#x662F; (task, callback)&#x3002;
+ * @param {number} [concurrency=1] - `integer` &#x503C;&#xFF0C;&#x51B3;&#x5B9A;&#x4E86;
+ * `worker` &#x51FD;&#x6570;&#x5E76;&#x53D1;&#x8FD0;&#x884C;&#x7684;&#x6570;&#x91CF;&#x3002; &#x7701;&#x7565;&#x65F6;&#xFF0C;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A; `1`&#x3002;
+ * &#x5982;&#x679C;&#x8BBE;&#x7F6E;&#x4E3A; `0`&#xFF0C;&#x5C06;&#x629B;&#x51FA;&#x9519;&#x8BEF;&#x3002;
+ * @returns {module:ControlFlow.QueueObject} &#x7528;&#x6765;&#x7BA1;&#x7406;&#x4EFB;&#x52A1;&#x7684; queue &#x5BF9;&#x8C61;&#x3002;
+ * &#x53EF;&#x9644;&#x52A0;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x5230;&#x67D0;&#x4E9B;&#x5C5E;&#x6027;&#x4E0A;&#xFF0C;&#x5E76;&#x76D1;&#x542C;&#x961F;&#x5217;&#x751F;&#x547D;&#x5468;&#x671F;&#x7684;&#x4E00;&#x4E9B;&#x4E8B;&#x4EF6;&#x3002;
  * @example
  *
- * // create a queue object with concurrency 2
+ * // &#x4EE5;&#x5E76;&#x53D1;&#x6570; 2 &#x521B;&#x5EFA;&#x961F;&#x5217;&#x5BF9;&#x8C61;
  * var q = async.queue(function(task, callback) {
  *     console.log(&apos;hello &apos; + task.name);
  *     callback();
  * }, 2);
  *
- * // assign a callback
+ * // &#x6307;&#x5B9A; callback
  * q.drain(function() {
  *     console.log(&apos;all items have been processed&apos;);
  * });
- * // or await the end
+ * // &#x6216; await &#x81F3;&#x7ED3;&#x675F;
  * await q.drain()
  *
- * // assign an error callback
+ * // &#x8BBE;&#x7F6E; error callback
  * q.error(function(err, task) {
  *     console.error(&apos;task experienced an error&apos;);
  * });
  *
- * // add some items to the queue
+ * // &#x4E3A;&#x961F;&#x5217;&#x6DFB;&#x52A0;&#x4EFB;&#x52A1;
  * q.push({name: &apos;foo&apos;}, function(err) {
  *     console.log(&apos;finished processing foo&apos;);
  * });
- * // callback is optional
+ * // callback &#x53EF;&#x5FFD;&#x7565;
  * q.push({name: &apos;bar&apos;});
  *
- * // add some items to the queue (batch-wise)
+ * // &#x6279;&#x91CF;&#x6DFB;&#x52A0;&#x4EFB;&#x52A1;&#x5230;&#x961F;&#x5217;
  * q.push([{name: &apos;baz&apos;},{name: &apos;bay&apos;},{name: &apos;bax&apos;}], function(err) {
  *     console.log(&apos;finished processing item&apos;);
  * });
  *
- * // add some items to the front of the queue
+ * // &#x6DFB;&#x52A0;&#x4EFB;&#x52A1;&#x81F3;&#x961F;&#x5217;&#x7684;&#x524D;&#x6392;
  * q.unshift({name: &apos;bar&apos;}, function (err) {
  *     console.log(&apos;finished processing bar&apos;);
  * });
