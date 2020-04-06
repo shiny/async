@@ -15,7 +15,7 @@ var self = this;
 <?js } ?>
 
 <?js if (data.type && data.type.names) {?>
-    <h5>Type:</h5>
+    <h5>类型：</h5>
     <ul>
         <li>
             <?js= self.partial('type.tmpl', data.type.names) ?>
@@ -33,6 +33,6 @@ var self = this;
 <?js } ?>
 
 <?js if (data.examples && examples.length) { ?>
-    <h5>Example<?js= examples.length > 1? 's':'' ?></h5>
+    <h5>示例：</h5>
     <?js= this.partial('examples.tmpl', examples) ?>
 <?js } ?>

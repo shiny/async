@@ -14,7 +14,7 @@ if (data.defaultvalue && (data.defaultvaluetype === 'object' || data.defaultvalu
     if (properties && properties.length && properties.forEach) {
 ?>
 
-    <h5 class="subsection-title">Properties:</h5>
+    <h5 class="subsection-title">属性：</h5>
 
     <?js= this.partial('properties.tmpl', data) ?>
 
@@ -23,7 +23,7 @@ if (data.defaultvalue && (data.defaultvaluetype === 'object' || data.defaultvalu
 <dl class="details">
 
     <?js if (data.version) {?>
-    <dt class="tag-version">Version:</dt>
+    <dt class="tag-version">版本：</dt>
     <dd class="tag-version"><ul class="dummy"><li><?js= version ?></li></ul></dd>
     <?js } ?>
 
@@ -108,7 +108,7 @@ if (data.defaultvalue && (data.defaultvaluetype === 'object' || data.defaultvalu
     <?js } ?>
 
     <?js if (data.meta && self.outputSourceFiles) {?>
-    <dt class="tag-source">Source:</dt>
+    <dt class="tag-source">源码：</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <?js= self.linkto(meta.shortpath) ?>, <?js= self.linkto(meta.shortpath, 'line ' + meta.lineno, null, 'line' + meta.lineno) ?>
     </li></ul></dd>
