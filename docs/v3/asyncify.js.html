@@ -80,17 +80,15 @@ import setImmediate from &apos;./internal/setImmediate&apos;;
 import { isAsync } from &apos;./internal/wrapAsync&apos;
 
 /**
- * Take a sync function and make it async, passing its return value to a
- * callback. This is useful for plugging sync functions into a waterfall,
- * series, or other async functions. Any arguments passed to the generated
- * function will be passed to the wrapped function (except for the final
- * callback argument). Errors thrown will be passed to the callback.
+ * &#x5C06;&#x540C;&#x6B65;&#x51FD;&#x6570;&#x8F6C;&#x4E3A;&#x5F02;&#x6B65;&#xFF0C;&#x5C06;&#x8FD4;&#x56DE;&#x503C;&#x4F20;&#x7ED9; callback&#x3002;
+ * &#x5E2E;&#x52A9;&#x540C;&#x6B65;&#x51FD;&#x6570;&#x4F20;&#x5165;&#x7011;&#x5E03;&#x51FD;&#x6570;&#xFF08;waterfall&#xFF09;&#x3001;&#x4E32;&#x884C;&#x51FD;&#x6570;&#xFF08;series&#xFF09;&#x6216;&#x5176;&#x4ED6; async &#x51FD;&#x6570;&#x3002;
+ * &#x9664;&#x4E86;&#x6700;&#x540E;&#x4E00;&#x4E2A; callback &#x53C2;&#x6570;&#x5916;&#xFF0C;&#x6240;&#x6709;&#x4F20;&#x5165;&#x7684;&#x53C2;&#x6570;&#x90FD;&#x4F1A;&#x4F20;&#x7ED9;&#x5305;&#x88C5;&#x7684;&#x51FD;&#x6570;&#x3002;
+ * &#x629B;&#x51FA;&#x7684;&#x9519;&#x8BEF;&#x5219;&#x4F1A;&#x4F20;&#x7ED9; callback&#x3002;
  *
- * If the function passed to `asyncify` returns a Promise, that promises&apos;s
- * resolved/rejected state will be used to call the callback, rather than simply
- * the synchronous return value.
+ * &#x5982;&#x679C;&#x4F20;&#x7ED9; `asyncify` &#x7684;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x4E86;&#x4E00;&#x4E2A; Promise&#xFF0C;&#x5219;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x4F1A;&#x81EA;&#x52A8;&#x6839;&#x636E;&#x72B6;&#x6001;&#x8C03;&#x7528; resolved/rejected&#xFF0C;
+ * &#x800C;&#x4E0D;&#x662F;&#x4EC5;&#x4EC5;&#x8FD4;&#x56DE;&#x540C;&#x6B65;&#x7684;&#x503C;&#x3002;
  *
- * This also means you can asyncify ES2017 `async` functions.
+ * &#x8FD9;&#x6837;&#x5C31;&#x610F;&#x5473;&#x7740;&#x652F;&#x6301; ES2017 `async` &#x51FD;&#x6570;&#x3002;
  *
  * @name asyncify
  * @static
@@ -98,36 +96,34 @@ import { isAsync } from &apos;./internal/wrapAsync&apos;
  * @method
  * @alias wrapSync
  * @category Util
- * @param {Function} func - The synchronous function, or Promise-returning
- * function to convert to an {@link AsyncFunction}.
- * @returns {AsyncFunction} An asynchronous wrapper of the `func`. To be
- * invoked with `(args..., callback)`.
+ * @param {Function} func - &#x5F85;&#x8F6C;&#x6362;&#x6210; {@link AsyncFunction} &#x7684;&#x540C;&#x6B65;&#x51FD;&#x6570;&#x3001;&#x8FD4;&#x56DE; Promise &#x7684;&#x51FD;&#x6570;&#x3002;
+ * @returns {AsyncFunction} `func` &#x7684;&#x5F02;&#x6B65;&#x5305;&#x88C5;&#xFF0C;
+ * &#x4F1A;&#x4EE5; `(args..., callback)` &#x8C03;&#x7528;&#x3002;
  * @example
  *
- * // passing a regular synchronous function
+ * // &#x4F20;&#x5165;&#x5E38;&#x89C4;&#x540C;&#x6B65;&#x51FD;&#x6570;
  * async.waterfall([
  *     async.apply(fs.readFile, filename, &quot;utf8&quot;),
  *     async.asyncify(JSON.parse),
  *     function (data, next) {
- *         // data is the result of parsing the text.
- *         // If there was a parsing error, it would have been caught.
+ *         // data &#x662F;&#x89E3;&#x6790;&#x540E;&#x7684; text
+ *         // &#x82E5;&#x51FA;&#x73B0;&#x9519;&#x8BEF;&#xFF0C;&#x4F1A;&#x88AB;&#x6355;&#x83B7;&#x3002;
  *     }
  * ], callback);
  *
- * // passing a function returning a promise
+ * // &#x4F20;&#x5165;&#x8FD4;&#x56DE; promise &#x7684;&#x51FD;&#x6570;
  * async.waterfall([
  *     async.apply(fs.readFile, filename, &quot;utf8&quot;),
  *     async.asyncify(function (contents) {
  *         return db.model.create(contents);
  *     }),
  *     function (model, next) {
- *         // `model` is the instantiated model object.
- *         // If there was an error, this function would be skipped.
+ *         // `model` &#x662F; model &#x5BF9;&#x8C61;&#x5B9E;&#x4F8B;
+ *         // &#x82E5;&#x51FA;&#x73B0;&#x9519;&#x8BEF;&#xFF0C;&#x6B64;&#x51FD;&#x6570;&#x4F1A;&#x88AB;&#x8DF3;&#x8FC7;
  *     }
  * ], callback);
  *
- * // es2017 example, though `asyncify` is not needed if your JS environment
- * // supports async functions out of the box
+ * // es2017 &#x4F8B;&#x5B50;&#xFF0C;&#x5F53;&#x7136;&#x5982;&#x679C; JS &#x73AF;&#x5883;&#x652F;&#x6301; async &#x51FD;&#x6570;&#xFF0C;&#x5C31;&#x4E0D;&#x9700;&#x8981; `asyncify` &#x5316;
  * var q = async.queue(async.asyncify(async function(file) {
  *     var intermediateStep = await processFile(file);
  *     return await somePromise(intermediateStep)
