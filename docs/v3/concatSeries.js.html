@@ -95,7 +95,6 @@ import awaitify from &apos;./internal/awaitify&apos;
  * &#x7ED3;&#x679C;&#x662F; `iteratee` &#x51FD;&#x6570;&#x4EA7;&#x751F;&#x7684;&#x5408;&#x5E76;&#x6570;&#x7EC4;&#x3002;&#x8C03;&#x7528;&#xFF1A;
  * (err, results)&#x3002;
  * @returns {Promise} &#x5FFD;&#x7565; callback &#x65F6;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; promise
- * @returns A Promise, if no callback is passed
  */
 function concatSeries(coll, iteratee, callback) {
     return concatLimit(coll, 1, iteratee, callback)
